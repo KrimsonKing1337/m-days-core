@@ -1,14 +1,15 @@
 {
   "name": "m-days-core",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "./",
   "scripts": {
-    "make": "npm run clean && npm run copy-files && npm run ts && tsc-alias && npm run packaging",
-    "clean": "rimraf dist lib lib-esm",
+    "make": "npm run clean && npm run copy-files && npm run ts && tsc-alias && npm run up && npm run packaging",
+    "clean": "rimraf dist tgz lib lib-esm",
     "ts": "tsc && tsc -m es6 --outDir lib-esm",
     "copy-files": "copyfiles -u 1 -s src/**/*.* lib/src/ -e src/**/*.tsx",
-    "packaging": "npm pack",
+    "packaging": "node ./tgzPrepare.js && npm pack --pack-destination ./tgz",
+    "up": "npm version patch --git-tag-version false --commit-hooks false",
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "node ./postinstall.js"
   },
@@ -21,6 +22,7 @@
     "react-router-dom": "^6.15.0"
   },
   "devDependencies": {
+    "@types/node": "^20.5.6",
     "@types/react": "^18.2.14",
     "copyfiles": "^2.4.1",
     "rimraf": "^5.0.1",

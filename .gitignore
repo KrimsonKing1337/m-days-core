@@ -1,5 +1,7 @@
 .idea
 node_modules
 dist
+img_bg
+
 *.bak
 *.tgz
