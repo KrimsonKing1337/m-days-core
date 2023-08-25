@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig#",
+  "compilerOptions": {
+    "strictPropertyInitialization": false,
+    "strict": true,
+    "esModuleInterop": true,
+    "pretty": false,
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "lib",
+    "sourceMap": true,
+    "declaration": true,
+    "jsx": "react-jsx",
+    "baseUrl": "./",
+    "paths": {
+      "assets": ["./src/assets"],
+      "assets/*": ["./src/assets/*"],
+      "components": ["./src/components"],
+      "components/*": ["./src/components/*"],
+      "hooks": ["./src/hooks"],
+      "hooks/*": ["./src/hooks/*"],
+      "utils": ["./src/utils/*"],
+      "utils/*": ["./src/utils/*"]
+    },
+    "lib": ["es2015", "dom"],
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "allowJs": true,
+    "noEmit": false,
+    "allowSyntheticDefaultImports": true,
+  },
+  "include": ["d.ts", "src/**/*"],
+  "exclude": ["node_modules", "build", "dist", "public", "jest", "lib", "lib-esm"]
+}

@@ -1,0 +1,44 @@
+{
+  "name": "m-days-core",
+  "version": "0.0.1",
+  "description": "",
+  "main": "./",
+  "scripts": {
+    "make": "npm run clean && npm run copy-files && npm run ts && tsc-alias && npm run packaging",
+    "clean": "rimraf dist lib lib-esm",
+    "ts": "tsc && tsc -m es6 --outDir lib-esm",
+    "copy-files": "copyfiles -u 1 -s src/**/*.* lib/src/ -e src/**/*.tsx",
+    "packaging": "npm pack",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "node ./postinstall.js"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
+    "axios": "^0.21.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-redux": "^7.2.9",
+    "react-router-dom": "^6.15.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.14",
+    "copyfiles": "^2.4.1",
+    "rimraf": "^5.0.1",
+    "tsc-alias": "^1.8.7",
+    "typescript": "^5.2.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KrimsonKing1337/m-days-core.git"
+  },
+  "author": "Oleg Shilov Jr",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KrimsonKing1337/m-days-core/issues"
+  },
+  "homepage": "https://github.com/KrimsonKing1337/m-days-core#readme",
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=6.5.0"
+  }
+}
