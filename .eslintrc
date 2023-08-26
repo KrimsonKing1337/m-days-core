@@ -3,8 +3,7 @@
   "plugins": ["import", "@typescript-eslint", "@typescript-eslint/tslint", "react", "jest"],
   "extends": [
     "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "react-app"
+    "plugin:@typescript-eslint/recommended"
   ],
   "parserOptions": {
     "project": "./tsconfig.json",
