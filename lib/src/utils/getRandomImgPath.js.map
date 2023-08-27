@@ -1,0 +1,1 @@
+{"version":3,"file":"getRandomImgPath.js","sourceRoot":"","sources":["../../../src/utils/getRandomImgPath.ts"],"names":[],"mappings":";;;AAAA,yCAAwC;AAExC,SAAgB,gBAAgB,CAAC,IAAY;IAC3C,IAAM,MAAM,GAAG,IAAA,qBAAS,EAAC,CAAC,EAAE,IAAI,CAAC,MAAM,CAAC,CAAC;IAEzC,OAAO,sBAAe,IAAI,CAAC,MAAM,CAAC,CAAE,CAAC;AACvC,CAAC;AAJD,4CAIC"}
