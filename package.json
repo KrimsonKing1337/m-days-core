@@ -10,7 +10,7 @@
     "copy-files": "copyfiles -u 1 -s src/**/*.* lib/src/ -e src/**/*.ts -e src/**/*.tsx",
     "packaging": "node ./scripts/tgzPrepare.js && npm pack --pack-destination ./tgz",
     "up": "npm version patch --git-tag-version false --commit-hooks false",
-    "scss": "npx node-sass ./src --output ./src",
+    "scss": "node-sass ./src --output ./src",
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "node ./scripts/postinstall.js",
     "lint-staged": "lint-staged",
