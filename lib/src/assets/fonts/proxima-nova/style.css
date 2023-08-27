@@ -1,0 +1,13 @@
+@font-face {
+  font-family: 'ProximaNovaRegular';
+  font-style: normal;
+  font-weight: normal;
+  src: local('ProximaNovaRegular'), url('ProximaNovaRegular.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'ProximaNovaAltThin';
+  font-style: normal;
+  font-weight: normal;
+  src: local('ProximaNovaAltThin'), url('ProximaNovaAltThin.otf') format('opentype');
+}

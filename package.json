@@ -1,15 +1,16 @@
 {
   "name": "m-days-core",
-  "version": "0.0.7",
+  "version": "0.0.9",
   "description": "",
   "main": "./",
   "scripts": {
-    "make": "npm run clean && npm run copy-files && npm run ts && tsc-alias && npm run up && npm run packaging",
+    "make": "node ./scripts/make.js",
     "clean": "rimraf dist tgz lib lib-esm",
     "ts": "tsc && tsc -m es6 --outDir lib-esm",
     "copy-files": "copyfiles -u 1 -s src/**/*.* lib/src/ -e src/**/*.ts -e src/**/*.tsx",
     "packaging": "node ./scripts/tgzPrepare.js && npm pack --pack-destination ./tgz",
     "up": "npm version patch --git-tag-version false --commit-hooks false",
+    "scss": "npx node-sass ./src --output ./src",
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "node ./scripts/postinstall.js",
     "lint-staged": "lint-staged",
@@ -48,6 +49,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "husky": "^4.3.8",
     "lint-staged": "^14.0.1",
+    "node-sass": "^9.0.0",
     "rimraf": "^5.0.1",
     "tsc-alias": "^1.8.7",
     "typescript": "^5.2.2"

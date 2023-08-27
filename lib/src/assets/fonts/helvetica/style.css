@@ -1,0 +1,6 @@
+@font-face {
+  font-family: 'Helv-4-Light';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Helv-4-Light'), url('helv4light.ttf') format('truetype');
+}
