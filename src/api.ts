@@ -5,6 +5,7 @@ import { WeatherResp } from './@types';
 export type getCurrentWeatherParams = {
   latitude: number;
   longitude: number;
+  protocol?: string;
 };
 
 export async function getCurrentWeather({ latitude, longitude }: getCurrentWeatherParams) {
