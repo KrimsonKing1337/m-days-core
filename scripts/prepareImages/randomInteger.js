@@ -1,3 +1,9 @@
+/**
+ *
+ * @param min {number}
+ * @param max {number}
+ * @returns {number}
+ */
 module.exports = function (min, max) {
     const rand = min + Math.random() * (max + 1 - min);
 
