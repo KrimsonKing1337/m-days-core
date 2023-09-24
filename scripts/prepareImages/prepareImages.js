@@ -1,11 +1,12 @@
 const sharp = require('sharp');
 
-const { getPaths } = require('./getPaths.js');
-const { getRandomString } = require('./getRandomString.js');
-const { getMaxWidth } = require('./getMaxWidth');
-const { readDirR } = require('./readDirR.js');
-const { makeDir } = require('./makeDir.js');
-const { removeDir } = require('./removeDir.js');
+const { getPaths } = require('./utils');
+const { getMaxWidth } = require('./utils');
+const { getRandomString } = require('./utils');
+
+const { readDirR } = require('./utils');
+const { makeDir } = require('./utils');
+const { removeDir } = require('./utils');
 
 const paths = getPaths();
 

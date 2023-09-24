@@ -7,7 +7,7 @@ const { random } = require('./getRandomInteger.js');
  * @param path
  * @returns {string}
  */
-function getRandomImg(path) {
+function getRandomImage(path) {
     let oldFile;
 
     function randomFile() {
@@ -24,4 +24,4 @@ function getRandomImg(path) {
     return randomFile();
 }
 
-module.exports = { getRandomImg };
+module.exports = { getRandomImage: getRandomImage };
