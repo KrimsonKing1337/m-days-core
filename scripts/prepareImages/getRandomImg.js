@@ -1,13 +1,13 @@
 const fs = require('fs');
 
-const random = require('./randomInteger');
+const { random } = require('./getRandomInteger.js');
 
 /**
  *
  * @param path
  * @returns {string}
  */
-module.exports = function(path) {
+function getRandomImg(path) {
     let oldFile;
 
     function randomFile() {
@@ -22,4 +22,6 @@ module.exports = function(path) {
     }
 
     return randomFile();
-};
+}
+
+module.exports = { getRandomImg };

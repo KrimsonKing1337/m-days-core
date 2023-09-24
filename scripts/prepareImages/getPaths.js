@@ -24,4 +24,4 @@ function getPaths() {
   };
 }
 
-module.exports = getPaths;
+module.exports = { getPaths };

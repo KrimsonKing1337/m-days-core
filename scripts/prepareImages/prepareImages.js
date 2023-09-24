@@ -1,11 +1,11 @@
 const sharp = require('sharp');
 
-const getPaths = require('./getPaths.js');
-const randomString = require('./randomString');
-const getMaxWidth = require('./getMaxWidth');
-const readDir = require('./readDirSync.js');
-const createDirIfNotExist = require('./createDirIfNotExist.js');
-const removeDir = require('./removeDir.js');
+const { getPaths } = require('./getPaths.js');
+const { getRandomString } = require('./getRandomString.js');
+const { getMaxWidth } = require('./getMaxWidth');
+const { readDirR } = require('./readDirR.js');
+const { makeDir } = require('./makeDir.js');
+const { removeDir } = require('./removeDir.js');
 
 const paths = getPaths();
 
@@ -30,7 +30,7 @@ class PrepareImages {
    * @returns {Array}
    */
   getImages() {
-    return readDir({
+    return readDirR({
       path: this.imagesSourcesPath,
       formats: this.allowFormats
     });
@@ -132,11 +132,11 @@ class PrepareImages {
       return false;
     }
 
-    const newName = randomString();
+    const newName = getRandomString();
     const imgCurTargetDir = this.tempPath;
     const newFullName = `${imgCurTargetDir}/${newName}.jpg`;
 
-    createDirIfNotExist(imgCurTargetDir);
+    makeDir(imgCurTargetDir);
 
     await sharp(img.fullPath)
       .resize({ width: cropVal, height: cropVal, fit: 'cover' })
@@ -158,11 +158,11 @@ class PrepareImages {
    */
   async convertTargetEachSize({ img, sizes } = {}) {
     for (const sizeCur of sizes) {
-      const newName = randomString();
+      const newName = getRandomString();
       const imgCurTargetDir = `${this.imagesTargetPath}/${sizeCur}`;
       const newFullName = `${imgCurTargetDir}/${newName}.jpg`;
 
-      createDirIfNotExist(imgCurTargetDir);
+      makeDir(imgCurTargetDir);
 
       await this.convert({
         img,
@@ -195,7 +195,7 @@ class PrepareImages {
 
   async start() {
     removeDir(this.imagesTargetPath);
-    createDirIfNotExist(this.imagesTargetPath);
+    makeDir(this.imagesTargetPath);
 
     const images = this.getImages();
 

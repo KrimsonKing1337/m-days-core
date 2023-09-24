@@ -4,10 +4,10 @@ const fs = require('fs');
  *
  * @param path {string}
  */
-function createDirIfNotExist(path) {
+function makeDir(path) {
   if (!fs.existsSync(path)) {
     fs.mkdirSync(path);
   }
 }
 
-module.exports = createDirIfNotExist;
+module.exports =  { makeDir };

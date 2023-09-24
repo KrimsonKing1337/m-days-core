@@ -17,4 +17,4 @@ function getFileInfo(pathFile) {
   };
 }
 
-module.exports = getFileInfo;
+module.exports = { getFileInfo };

@@ -2,12 +2,14 @@ const fs = require('fs');
 
 const getFileInfo = require('./getFileInfo.js');
 
+// R = Recursively
+
 /**
  *
  * @param path {string}
  * @param formats {string[]}
  */
-function readDir({ path, formats = [] }) {
+function readDirR({ path, formats = [] }) {
   const allFiles = [];
 
   function R(path) {
@@ -46,4 +48,4 @@ function readDir({ path, formats = [] }) {
   return allFiles;
 }
 
-module.exports = readDir;
+module.exports = { readDirR };

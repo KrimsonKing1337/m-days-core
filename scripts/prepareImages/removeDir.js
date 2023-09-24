@@ -8,4 +8,4 @@ function removeDir(dirPath) {
   fs.rmSync(dirPath, { recursive: true, force: true });
 }
 
-module.exports = removeDir;
+module.exports = { removeDir };

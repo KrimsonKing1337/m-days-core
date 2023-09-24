@@ -3,7 +3,7 @@
  * @param count {number}
  * @returns {string}
  */
-function randomString(count = 10) {
+function getRandomString(count = 10) {
     let randomString = '';
     const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
 
@@ -14,4 +14,4 @@ function randomString(count = 10) {
     return randomString;
 }
 
-module.exports = randomString;
+module.exports = { getRandomString };
