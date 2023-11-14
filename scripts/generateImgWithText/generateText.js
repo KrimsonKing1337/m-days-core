@@ -1,5 +1,11 @@
 const sharp = require('sharp');
 
+const { getRandomImgPath } = require('./getRandomImgPath.js');
+const imgs = require('./img_bg.json');
+const path = require('path');
+
+const publicImagesPath = path.resolve(__dirname, '../../../m-days-public/');
+
 async function main() {
   let date_ob = new Date();
 
@@ -30,7 +36,10 @@ async function main() {
 
   console.log('___', dateLabel);
 
-  const image = await sharp('./1.jpg');
+  const randomImagePath = getRandomImgPath(imgs);
+  const imagePath = path.join(publicImagesPath, randomImagePath);
+
+  const image = await sharp(imagePath);
   const metadata = await image.metadata()
 
   const shadow = Buffer.from(`
