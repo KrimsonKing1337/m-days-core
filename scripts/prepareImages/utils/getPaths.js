@@ -7,7 +7,7 @@ const photosTargetPath = path.join(mDaysDirRoot, '../photos/_ready');
 const photosTempPath = path.join(mDaysDirRoot, '../photos/_temp');
 
 const gifsSourcesPath = path.join(mDaysDirRoot, '../images');
-const gifsTargetPath = path.join(mDaysDirRoot, '../images/pixel/_ready'); // todo
+const gifsTargetPath = path.join(mDaysDirRoot, '../images/_ready/pixel'); // todo
 const gifsTempPath = path.join(mDaysDirRoot, '../images/_temp');
 
 /**
