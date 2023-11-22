@@ -1,3 +1,7 @@
-const prepareImages = require('./prepareImages.js');
+const preparePhotos = require('./preparePhotos.js');
+const prepareGifs = require('./prepareGifs.js');
 
-module.exports = prepareImages;
+module.exports = {
+  preparePhotos,
+  prepareGifs,
+};

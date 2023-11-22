@@ -1,26 +1,38 @@
 const path = require('path');
 
-const root = path.resolve(__dirname, '../../');
+const mDaysDirRoot = path.resolve(__dirname, '../../../../');
 
-const imagesSourcesPath = path.join(root, '../photos');
-const imagesTargetPath = path.join(root, '../photos/_ready');
-const imagesTempPath = path.join(root, '../photos/_temp');
+const photosSourcesPath = path.join(mDaysDirRoot, '../photos');
+const photosTargetPath = path.join(mDaysDirRoot, '../photos/_ready');
+const photosTempPath = path.join(mDaysDirRoot, '../photos/_temp');
+
+const gifsSourcesPath = path.join(mDaysDirRoot, '../images');
+const gifsTargetPath = path.join(mDaysDirRoot, '../images/pixel/_ready'); // todo
+const gifsTempPath = path.join(mDaysDirRoot, '../images/_temp');
 
 /**
  *
  * @returns {
  *  {
- *    imagesTempPath: string,
- *    imagesSourcesPath: string,
- *    imagesTargetPath: string
+ *    photosTempPath: string,
+ *    photosSourcesPath: string,
+ *    photosTargetPath: string,
+ *
+ *    gifsSourcesPath: string,
+ *    gifsTargetPath: string,
+ *    gifsTempPath: string,
  *  }
  * }
  */
 function getPaths() {
   return {
-    imagesSourcesPath,
-    imagesTargetPath,
-    imagesTempPath,
+    photosSourcesPath,
+    photosTargetPath,
+    photosTempPath,
+
+    gifsSourcesPath,
+    gifsTargetPath,
+    gifsTempPath
   };
 }
 

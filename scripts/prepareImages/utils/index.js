@@ -11,6 +11,8 @@ const { getRandomImage } = require('./getRandomImage.js');
 const { getFileInfo } = require('./getFileInfo.js');
 const { getMaxWidth } = require('./getMaxWidth.js');
 
+const { getGifVariant } = require('./getGifVariant.js');
+
 module.exports = {
   getPaths,
   readDirR,
@@ -21,4 +23,5 @@ module.exports = {
   getRandomImage,
   getFileInfo,
   getMaxWidth,
+  getGifVariant,
 };

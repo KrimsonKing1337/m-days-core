@@ -10,7 +10,7 @@ const { removeDir } = require('./utils');
 
 const paths = getPaths();
 
-class PrepareImages {
+class PreparePhotos {
   /**
    *
    * @param imagesSourcesPath {string}
@@ -219,10 +219,10 @@ class PrepareImages {
 
 
 
-const prepareImages = new PrepareImages({
-  imagesSourcesPath: paths.imagesSourcesPath,
-  imagesTargetPath: paths.imagesTargetPath,
-  imagesTempPath: paths.imagesTempPath,
+const prepareImages = new PreparePhotos({
+  imagesSourcesPath: paths.photosSourcesPath,
+  imagesTargetPath: paths.photosTargetPath,
+  imagesTempPath: paths.photosTempPath,
 });
 
 prepareImages.start();
