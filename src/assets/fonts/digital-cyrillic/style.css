@@ -1,0 +1,6 @@
+@font-face {
+  font-family: 'Digital-Cyrillic';
+  font-style: normal;
+  font-weight: normal;
+  src: local('digital-cyirillic'), url('digital-cyirillic.orf') format('opentype');
+}
