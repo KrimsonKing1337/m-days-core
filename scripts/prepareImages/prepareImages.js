@@ -71,6 +71,8 @@ class PrepareImages {
 
     // todo: не уверен, что это здесь нужно
     // todo: нужно вертикальные, горизонтальные и квадратные раскидывать по разным папкам
+    //  применять только к гифкам. здесь же, если разрешение мелкое - вырезаем изображение с нужным разрешением
+    //  для примера можно пробовать на psp и nokia c3;
     if (delta < 1 || delta > 2) {
       const squareImg = await this.makeItSquare(formattedImg);
 
@@ -174,7 +176,7 @@ class PrepareImages {
       let imgCurTargetDir = `${this.imagesTargetPath}/${newSubFolder}/${sizeCur}`;
 
       if (sizeCur < 640) {
-        imgCurTargetDir = `${this.imagesTargetPath}/${newSubFolder}/small`;
+        imgCurTargetDir = `${this.imagesTargetPath}/${newSubFolder}/100`;
       }
 
       const newFullName = `${imgCurTargetDir}/${newName}.jpg`;
