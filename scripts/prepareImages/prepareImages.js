@@ -23,7 +23,7 @@ class PrepareImages {
     this.tempPath = imagesTempPath;
 
     this.allowSizes = [640, 1280, 1600, 1920, 2560, 3840, 5210, 7680];
-    this.allowFormats = ['bmp', 'gif', 'jng', 'jp2', 'jpc', 'jpeg', 'jpg', 'png', 'ptif', 'tiff'];
+    this.allowFormats = ['bmp', 'gif', 'jng', 'jp2', 'jpc', 'jpeg', 'jpg', 'png', 'ptif', 'tiff', 'webp'];
   }
 
   /**
@@ -56,14 +56,21 @@ class PrepareImages {
       height,
     };
 
-    const delta = (width / height);
-
+    // если ширина меньше 640 - то копируем без изменений
     if (width < 640) {
-      console.log(`${img.fullPath} is too small, skipped;`);
+      sizes.push(width);
 
-      return null;
+      return {
+        img: formattedImg,
+        sizes,
+        tooSmall: true,
+      };
     }
 
+    const delta = (width / height);
+
+    // todo: не уверен, что это здесь нужно
+    // todo: нужно вертикальные, горизонтальные и квадратные раскидывать по разным папкам
     if (delta < 1 || delta > 2) {
       const squareImg = await this.makeItSquare(formattedImg);
 
@@ -160,7 +167,16 @@ class PrepareImages {
   async convertTargetEachSize({ img, sizes } = {}) {
     for (const sizeCur of sizes) {
       const newName = getRandomString();
-      const imgCurTargetDir = `${this.imagesTargetPath}/${img.subFolder}/${sizeCur}`;
+
+      const indexStart = paths.photosSourcesPath.length;
+      const newSubFolder = img.fullPathWithoutName.substring(indexStart);
+
+      let imgCurTargetDir = `${this.imagesTargetPath}/${newSubFolder}/${sizeCur}`;
+
+      if (sizeCur < 640) {
+        imgCurTargetDir = `${this.imagesTargetPath}/${newSubFolder}/small`;
+      }
+
       const newFullName = `${imgCurTargetDir}/${newName}.jpg`;
 
       makeDir(imgCurTargetDir);

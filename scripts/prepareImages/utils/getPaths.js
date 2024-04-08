@@ -2,7 +2,7 @@ const path = require('path');
 
 const mDaysDirRoot = path.resolve(__dirname, '../../../../');
 
-const photosSourcesPath = 'D:\\Images\\m-days\\static';
+const photosSourcesPath = 'C:\\Users\\K\\Downloads\\pics-test';
 const photosTargetPath = path.join(photosSourcesPath, './_ready');
 const photosTempPath = path.join(photosSourcesPath, './_temp');
 
