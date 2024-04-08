@@ -12,6 +12,7 @@
     "up": "npm version patch --git-tag-version false --commit-hooks false",
     "scss": "node-sass ./src --output ./src",
     "prepare-photos": "node ./scripts/prepareImages/preparePhotos.js",
+    "prepare-images": "node ./scripts/prepareImages/prepareImages.js",
     "prepare-gifs": "node ./scripts/prepareImages/prepareGifs.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "node ./scripts/postinstall.js",

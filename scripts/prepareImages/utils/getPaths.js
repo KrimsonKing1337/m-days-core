@@ -2,9 +2,9 @@ const path = require('path');
 
 const mDaysDirRoot = path.resolve(__dirname, '../../../../');
 
-const photosSourcesPath = path.join(mDaysDirRoot, '../photos');
-const photosTargetPath = path.join(mDaysDirRoot, '../photos/_ready');
-const photosTempPath = path.join(mDaysDirRoot, '../photos/_temp');
+const photosSourcesPath = 'D:\\Images\\m-days\\static';
+const photosTargetPath = path.join(photosSourcesPath, './_ready');
+const photosTempPath = path.join(photosSourcesPath, './_temp');
 
 const gifsSourcesPath = path.join(mDaysDirRoot, '../images');
 const gifsTargetPath = path.join(mDaysDirRoot, '../images/_ready/pixel'); // todo
