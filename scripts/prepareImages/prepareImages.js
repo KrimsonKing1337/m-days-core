@@ -82,6 +82,14 @@ class PrepareImages {
         console.log(`${img.fullPath} was cropped to square;`);
       } else {
         console.log(`${img.fullPath} is not valid due ratio;`);
+
+        sizes.push(width);
+
+        return {
+          img: formattedImg,
+          sizes,
+          invalidRatio: true,
+        };
       }
     }
 
@@ -165,8 +173,9 @@ class PrepareImages {
    * @param target {object}
    * @property target.img {object}
    * @property target.sizes {string[]}
+   * @property target.invalidRatio {boolean}
    */
-  async convertTargetEachSize({ img, sizes } = {}) {
+  async convertTargetEachSize({ img, sizes, invalidRatio } = {}) {
     for (const sizeCur of sizes) {
       const newName = getRandomString();
 
@@ -177,6 +186,10 @@ class PrepareImages {
 
       if (sizeCur < 640) {
         imgCurTargetDir = `${this.imagesTargetPath}/${newSubFolder}/100`;
+      }
+
+      if (invalidRatio) {
+        imgCurTargetDir = `${this.imagesTargetPath}/${newSubFolder}/_invalid-ratio`;
       }
 
       const newFullName = `${imgCurTargetDir}/${newName}.jpg`;
@@ -201,7 +214,7 @@ class PrepareImages {
    * @param newName {string}
    * @param newFullName {string}
    */
-  async convert({ img, size, newName, newFullName } = {}) {
+  async convert({ img, size, newFullName } = {}) {
     const width = Number(size);
 
     await sharp(img.fullPath)
@@ -209,7 +222,7 @@ class PrepareImages {
       .resize({ width })
       .toFile(newFullName);
 
-    console.log(`${img.name} converted to ${img.subFolder}/${size}/${newName}.jpg;`);
+    console.log(`${img.name} converted to ${newFullName}`);
   }
 
   async start() {
@@ -231,9 +244,9 @@ class PrepareImages {
 
 
 const prepareImages = new PrepareImages({
-  imagesSourcesPath: paths.photosSourcesPath,
-  imagesTargetPath: paths.photosTargetPath,
-  imagesTempPath: paths.photosTempPath,
+  imagesSourcesPath: paths.imagesSourcesPath,
+  imagesTargetPath: paths.imagesTargetPath,
+  imagesTempPath: paths.imagesTempPath,
 });
 
 prepareImages.start();
