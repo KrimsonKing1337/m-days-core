@@ -1,4 +1,5 @@
 const sharp = require('sharp');
+const fs = require('fs').promises;
 
 const { getPaths } = require('./utils');
 const { getRandomString } = require('./utils');
@@ -7,6 +8,7 @@ const { readDirR } = require('./utils');
 const { makeDir } = require('./utils');
 const { removeDir } = require('./utils');
 const { getGifVariant } = require('./utils');
+const { getMaxWidth } = require('./utils');
 
 const paths = getPaths();
 
@@ -21,6 +23,9 @@ class PrepareImages {
     this.imagesSourcesPath = imagesSourcesPath;
     this.imagesTargetPath = imagesTargetPath;
     this.tempPath = imagesTempPath;
+
+    this.allowSizes = [640, 1280, 1600, 1920, 2560, 3840, 5210, 7680];
+    this.allowFormats = ['gif'];
   }
 
   /**
@@ -30,6 +35,7 @@ class PrepareImages {
   getImages() {
     return readDirR({
       path: this.imagesSourcesPath,
+      allowFormats: this.allowFormats,
     });
   }
 
@@ -40,16 +46,16 @@ class PrepareImages {
    * @returns {object || null}
    */
   async formatTarget(img) {
-    let formattedImg = { ...img };
-    let size = 640;
+    let formattedImg = img;
+    const sizes = [];
 
     const { fullPath } = formattedImg;
-
-    const variant = getGifVariant(fullPath);
 
     const meta = await sharp(fullPath).metadata();
 
     const { width, height } = meta;
+
+    const variant = getGifVariant({width, height});
 
     formattedImg.size = {
       width,
@@ -57,12 +63,27 @@ class PrepareImages {
     };
 
     if (width < 640) {
-      size = width;
+      sizes.push(width);
+
+      return {
+        img: formattedImg,
+        sizes,
+        tooSmall: true,
+        variant,
+      };
     }
+
+    const maxWidth = getMaxWidth(width);
+
+    this.allowSizes.forEach((widthCur) => {
+      if (maxWidth >= widthCur) {
+        sizes.push(widthCur);
+      }
+    });
 
     return {
       img: formattedImg,
-      size,
+      sizes,
       variant,
     };
   }
@@ -98,22 +119,21 @@ class PrepareImages {
    * @param target {object}
    * @property target.img {object}
    * @property target.variant {string}
-   * @property target.size {string}
    */
-  async convertTarget({ img, size, variant } = {}) {
+  async convertTarget({ img, variant } = {}) {
     const newName = getRandomString();
-    const imgCurTargetDir = `${this.imagesTargetPath}/${variant}`;
+
+    const indexStart = paths.gifsSourcesPath.length;
+    const newSubFolder = img.fullPathWithoutName.substring(indexStart);
+
+    const imgCurTargetDir = `${this.imagesTargetPath}/${newSubFolder}/${variant}`;
     const newFullName = `${imgCurTargetDir}/${newName}.gif`;
 
     makeDir(imgCurTargetDir);
 
-    await this.convert({
-      img,
-      size,
-      variant,
-      newName,
-      newFullName,
-    });
+    await fs.cp(img.fullPath, newFullName);
+
+    console.log(`${img.name} copied to ${newFullName};`);
   }
 
   /**
@@ -141,14 +161,7 @@ class PrepareImages {
 
     const images = this.getImages();
 
-    // убираю аватарки фотографов
-    const imagesWithoutAvatars = images.filter((imgCur) => {
-      const { name } = imgCur;
-
-      return !name.includes('avatar');
-    });
-
-    const targets = await this.formatEachTarget(imagesWithoutAvatars);
+    const targets = await this.formatEachTarget(images);
 
     await this.convertEachTarget(targets);
 

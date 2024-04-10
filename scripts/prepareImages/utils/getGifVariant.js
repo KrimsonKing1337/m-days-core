@@ -1,14 +1,15 @@
 /**
  *
- * @param fullPath {string}
+ * @param width {number}
+ * @param height {number}
  */
-function getGifVariant(fullPath) {
-  if (fullPath.includes('/v/')) {
-    return 'v';
+function getGifVariant({ width, height } = {}) {
+  if (width > height) {
+    return 'h';
   }
 
-  if (fullPath.includes('/h/')) {
-    return 'h';
+  if (width < height) {
+    return 'v';
   }
 
   return 'sq';

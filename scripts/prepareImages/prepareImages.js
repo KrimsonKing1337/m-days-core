@@ -23,7 +23,7 @@ class PrepareImages {
     this.tempPath = imagesTempPath;
 
     this.allowSizes = [640, 1280, 1600, 1920, 2560, 3840, 5210, 7680];
-    this.allowFormats = ['bmp', 'gif', 'jng', 'jp2', 'jpc', 'jpeg', 'jpg', 'png', 'ptif', 'tiff', 'webp'];
+    this.allowFormats = ['bmp', 'jng', 'jp2', 'jpc', 'jpeg', 'jpg', 'png', 'ptif', 'tiff', 'webp'];
   }
 
   /**

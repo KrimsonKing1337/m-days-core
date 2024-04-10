@@ -10,9 +10,9 @@ const imagesSourcesPath = 'C:\\Users\\K\\Downloads\\pics-test';
 const imagesTargetPath = path.join(imagesSourcesPath, './_ready');
 const imagesTempPath = path.join(imagesSourcesPath, './_temp');
 
-const gifsSourcesPath = path.join(mDaysDirRoot, '../images');
-const gifsTargetPath = path.join(mDaysDirRoot, '../images/_ready/pixel'); // todo
-const gifsTempPath = path.join(mDaysDirRoot, '../images/_temp');
+const gifsSourcesPath = 'C:\\Users\\K\\Downloads\\pics-test\\dynamic';
+const gifsTargetPath = path.join(gifsSourcesPath, './_ready');
+const gifsTempPath = path.join(gifsSourcesPath, './_temp');
 
 /**
  *
