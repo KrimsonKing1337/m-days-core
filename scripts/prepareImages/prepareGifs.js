@@ -111,29 +111,35 @@ class PrepareImages {
    */
   async convertEachTarget(targets) {
     for (const targetCur of targets) {
-      await this.convertTarget(targetCur);
+      await this.convertTargetEachSize(targetCur);
     }
   }
 
-  /**
-   * @param target {object}
-   * @property target.img {object}
-   * @property target.variant {string}
-   */
-  async convertTarget({ img, variant } = {}) {
-    const newName = getRandomString();
+  async convertTargetEachSize({ img, sizes, variant, invalidRatio } = {}) {
+    for (const sizeCur of sizes) {
+      const newName = getRandomString();
 
-    const indexStart = paths.gifsSourcesPath.length;
-    const newSubFolder = img.fullPathWithoutName.substring(indexStart);
+      const indexStart = paths.gifsSourcesPath.length;
+      const newSubFolder = img.fullPathWithoutName.substring(indexStart);
 
-    const imgCurTargetDir = `${this.imagesTargetPath}/${newSubFolder}/${variant}`;
-    const newFullName = `${imgCurTargetDir}/${newName}.gif`;
+      let imgCurTargetDir = `${this.imagesTargetPath}/${newSubFolder}/${variant}/${sizeCur}`;
 
-    makeDir(imgCurTargetDir);
+      if (sizeCur < 640) {
+        imgCurTargetDir = `${this.imagesTargetPath}/${newSubFolder}/${variant}/100`;
+      }
 
-    await fs.cp(img.fullPath, newFullName);
+      if (invalidRatio) {
+        imgCurTargetDir = `${this.imagesTargetPath}/${newSubFolder}/${variant}/_invalid-ratio`;
+      }
 
-    console.log(`${img.name} copied to ${newFullName};`);
+      const newFullName = `${imgCurTargetDir}/${newName}.gif`;
+
+      makeDir(imgCurTargetDir);
+
+      await fs.cp(img.fullPath, newFullName);
+
+      console.log(`${img.name} copied to ${newFullName};`);
+    }
   }
 
   /**
