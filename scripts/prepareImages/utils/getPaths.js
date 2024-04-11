@@ -15,8 +15,8 @@ const gifsTargetPath = path.join(gifsSourcesPath, './_ready');
 const gifsTempPath = path.join(gifsSourcesPath, './_temp');
 
 const randomImagesSourcesPath = 'C:\\Users\\K\\Downloads\\pics-test';
-const randomImagesTargetPath = path.join(gifsSourcesPath, './_ready');
-const randomImagesTempPath = path.join(gifsSourcesPath, './_temp');
+const randomImagesTargetPath = path.join(randomImagesSourcesPath, './_ready');
+const randomImagesTempPath = path.join(randomImagesSourcesPath, './_temp');
 
 /**
  *

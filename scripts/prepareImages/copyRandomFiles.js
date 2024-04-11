@@ -2,27 +2,39 @@ const fs = require('fs').promises;
 
 const { readDirR } = require('./utils');
 const { getPaths } = require('./utils');
-const { makeDir } = require('./utils/index.js');
+const { makeDir, removeDir } = require('./utils/index.js');
+
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
 
 /**
  * @param amount {number}
 **/
 async function randomFiles(amount = 100) {
-  const { imagesSourcesPath, imagesTargetPath, imagesTempPath } = getPaths();
+  const { randomImagesSourcesPath, randomImagesTargetPath } = getPaths();
+
+  removeDir(randomImagesTargetPath);
+  makeDir(randomImagesTargetPath);
 
   const obj = {};
 
   const readDirResult = readDirR({
-    path: imagesSourcesPath,
+    path: randomImagesSourcesPath,
   });
+
+  shuffleArray(readDirResult);
 
   for (let i = 0; i < readDirResult.length; i++) {
     const img = readDirResult[i];
 
-    const indexStart = imagesSourcesPath.length;
+    const indexStart = randomImagesSourcesPath.length;
     const targetSubFolder = img.fullPathWithoutName.substring(indexStart);
 
-    const imgCurTargetDir = `${imagesTargetPath}/${targetSubFolder}`;
+    const imgCurTargetDir = `${randomImagesTargetPath}/${targetSubFolder}`;
 
     if (!obj[targetSubFolder]) {
       obj[targetSubFolder] = 0;
@@ -44,8 +56,6 @@ async function randomFiles(amount = 100) {
 
     await fs.cp(img.fullPath, newFullName);
 
-    // todo: это пока не рандомные файлы, это первые 100 файлов
-
     console.log(`${img.name} copied to ${newFullName};`);
 
     obj[targetSubFolder] += 1;
@@ -53,5 +63,3 @@ async function randomFiles(amount = 100) {
 }
 
 randomFiles();
-
-module.exports = { randomFiles };
