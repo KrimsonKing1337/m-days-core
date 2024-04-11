@@ -14,6 +14,10 @@ const gifsSourcesPath = 'C:\\Users\\K\\Downloads\\pics-test\\dynamic';
 const gifsTargetPath = path.join(gifsSourcesPath, './_ready');
 const gifsTempPath = path.join(gifsSourcesPath, './_temp');
 
+const randomImagesSourcesPath = 'C:\\Users\\K\\Downloads\\pics-test';
+const randomImagesTargetPath = path.join(gifsSourcesPath, './_ready');
+const randomImagesTempPath = path.join(gifsSourcesPath, './_temp');
+
 /**
  *
  * @returns {
@@ -29,6 +33,10 @@ const gifsTempPath = path.join(gifsSourcesPath, './_temp');
  *    gifsSourcesPath: string,
  *    gifsTargetPath: string,
  *    gifsTempPath: string,
+ *
+ *    randomImagesSourcesPath: string,
+ *    randomImagesTargetPath: string,
+ *    randomImagesTempPath: string,
  *  }
  * }
  */
@@ -44,7 +52,11 @@ function getPaths() {
 
     gifsSourcesPath,
     gifsTargetPath,
-    gifsTempPath
+    gifsTempPath,
+
+    randomImagesSourcesPath,
+    randomImagesTargetPath,
+    randomImagesTempPath,
   };
 }
 
