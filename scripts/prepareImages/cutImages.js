@@ -4,8 +4,8 @@ const sharp = require('sharp');
 
 const { readDirR, removeDir, makeDir } = require('./utils');
 
-const imagesSourcesPath = 'C:\\Users\\K\\Downloads\\pics-test\\static';
-const imagesTargetPath = path.join(imagesSourcesPath, './_ready');
+const imagesSourcesPath = 'C:\\Users\\K\\Downloads\\pics-test\\dynamic';
+const imagesTargetPath = path.join(imagesSourcesPath, './_ready_cut');
 
 const requiredWidth = 128;
 const requiredHeight = 128;
@@ -37,7 +37,9 @@ async function cutImages() {
       continue;
     }
 
-    await sharp(imageCur.fullPath)
+    const animated = imageCur.ext === 'gif';
+
+    await sharp(imageCur.fullPath, { animated })
       .resize({ width: requiredWidth, height: requiredHeight, fit: 'cover' })
       .toFile(newFullName);
 
