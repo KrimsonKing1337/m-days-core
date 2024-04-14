@@ -6,7 +6,7 @@ const photosSourcesPath = 'C:\\Users\\K\\Downloads\\pics-test';
 const photosTargetPath = path.join(photosSourcesPath, './_ready');
 const photosTempPath = path.join(photosSourcesPath, './_temp');
 
-const imagesSourcesPath = 'C:\\Users\\K\\Downloads\\pics-test';
+const imagesSourcesPath = 'C:\\Users\\K\\Downloads\\pics-test\\static';
 const imagesTargetPath = path.join(imagesSourcesPath, './_ready');
 const imagesTempPath = path.join(imagesSourcesPath, './_temp');
 
