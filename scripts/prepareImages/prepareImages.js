@@ -180,7 +180,7 @@ class PrepareImages {
 
       let imgCurTargetDir = `${this.imagesTargetPath}/${newSubFolder}/${sizeCur}`;
 
-      if (sizeCur < 128) {
+      if (sizeCur < 640) {
         imgCurTargetDir = `${this.imagesTargetPath}/${newSubFolder}/100`;
       }
 

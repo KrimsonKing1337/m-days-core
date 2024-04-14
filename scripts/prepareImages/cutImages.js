@@ -33,14 +33,18 @@ async function cutImages() {
 
     const { width, height } = meta;
 
-    if (width <= requiredWidth || height <= requiredHeight) {
+    if (width < requiredWidth || height < requiredHeight) {
       continue;
     }
 
     await sharp(imageCur.fullPath)
       .resize({ width: requiredWidth, height: requiredHeight, fit: 'cover' })
       .toFile(newFullName);
+
+    console.log(`${imageCur.name} converted to ${newFullName}`);
   }
+
+  console.log('done');
 }
 
 cutImages();
