@@ -2,7 +2,7 @@ const fs = require('fs').promises;
 
 const { readDirR } = require('./utils');
 const { getPaths } = require('./utils');
-const { makeDir, removeDir } = require('./utils/index.js');
+const { makeDir, removeDir } = require('./utils');
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -62,4 +62,4 @@ async function randomFiles(amount = 100) {
   }
 }
 
-randomFiles();
+randomFiles(500);

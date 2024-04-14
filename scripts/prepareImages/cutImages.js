@@ -7,8 +7,8 @@ const { readDirR, removeDir, makeDir } = require('./utils');
 const imagesSourcesPath = 'C:\\Users\\K\\Downloads\\pics-test\\static';
 const imagesTargetPath = path.join(imagesSourcesPath, './_ready');
 
-const requiredWidth = 480;
-const requiredHeight = 272;
+const requiredWidth = 128;
+const requiredHeight = 128;
 
 async function cutImages() {
   removeDir(imagesTargetPath);
