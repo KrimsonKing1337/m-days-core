@@ -60,6 +60,8 @@ async function randomFiles(amount = 100) {
 
     obj[targetSubFolder] += 1;
   }
+
+  console.log('done');
 }
 
 randomFiles(500);

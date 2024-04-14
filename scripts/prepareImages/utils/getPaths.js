@@ -6,16 +6,16 @@ const photosSourcesPath = 'C:\\Users\\K\\Downloads\\pics';
 const photosTargetPath = path.join(photosSourcesPath, './_ready');
 const photosTempPath = path.join(photosSourcesPath, './_temp');
 
-const imagesSourcesPath = 'C:\\Users\\K\\Downloads\\pics\\static';
-const imagesTargetPath = path.join(imagesSourcesPath, './_ready');
-const imagesTempPath = path.join(imagesSourcesPath, './_temp');
+const imagesSourcesPath = 'C:\\Users\\K\\Downloads\\pics\\_ready_random\\static';
+const imagesTargetPath = 'C:\\Users\\K\\Downloads\\pics\\static\\_ready';
+const imagesTempPath = 'C:\\Users\\K\\Downloads\\pics\\static\\_temp';
 
-const gifsSourcesPath = 'C:\\Users\\K\\Downloads\\pics\\dynamic';
-const gifsTargetPath = path.join(gifsSourcesPath, './_ready');
-const gifsTempPath = path.join(gifsSourcesPath, './_temp');
+const gifsSourcesPath = 'C:\\Users\\K\\Downloads\\pics\\_ready_random\\dynamic';
+const gifsTargetPath = 'C:\\Users\\K\\Downloads\\pics\\dynamic\\_ready';
+const gifsTempPath = 'C:\\Users\\K\\Downloads\\pics\\dynamic\\_temp';
 
 const randomImagesSourcesPath = 'C:\\Users\\K\\Downloads\\pics';
-const randomImagesTargetPath = path.join(randomImagesSourcesPath, './_ready');
+const randomImagesTargetPath = path.join(randomImagesSourcesPath, './_ready_random');
 const randomImagesTempPath = path.join(randomImagesSourcesPath, './_temp');
 
 /**
