@@ -2,19 +2,19 @@ const path = require('path');
 
 const mDaysDirRoot = path.resolve(__dirname, '../../../../');
 
-const photosSourcesPath = 'C:\\Users\\K\\Downloads\\pics-test';
+const photosSourcesPath = 'C:\\Users\\K\\Downloads\\pics';
 const photosTargetPath = path.join(photosSourcesPath, './_ready');
 const photosTempPath = path.join(photosSourcesPath, './_temp');
 
-const imagesSourcesPath = 'C:\\Users\\K\\Downloads\\pics-test\\static';
+const imagesSourcesPath = 'C:\\Users\\K\\Downloads\\pics\\static';
 const imagesTargetPath = path.join(imagesSourcesPath, './_ready');
 const imagesTempPath = path.join(imagesSourcesPath, './_temp');
 
-const gifsSourcesPath = 'C:\\Users\\K\\Downloads\\pics-test\\dynamic';
+const gifsSourcesPath = 'C:\\Users\\K\\Downloads\\pics\\dynamic';
 const gifsTargetPath = path.join(gifsSourcesPath, './_ready');
 const gifsTempPath = path.join(gifsSourcesPath, './_temp');
 
-const randomImagesSourcesPath = 'C:\\Users\\K\\Downloads\\pics-test';
+const randomImagesSourcesPath = 'C:\\Users\\K\\Downloads\\pics';
 const randomImagesTargetPath = path.join(randomImagesSourcesPath, './_ready');
 const randomImagesTempPath = path.join(randomImagesSourcesPath, './_temp');
 

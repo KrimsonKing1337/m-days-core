@@ -51,7 +51,15 @@ class PrepareImages {
 
     const { fullPath } = formattedImg;
 
-    const meta = await sharp(fullPath).metadata();
+    let meta;
+
+    try {
+      meta = await sharp(fullPath).metadata();
+    } catch (err) {
+      console.error(err);
+
+      return;
+    }
 
     const { width, height } = meta;
 
@@ -116,6 +124,10 @@ class PrepareImages {
   }
 
   async convertTargetEachSize({ img, sizes, variant, invalidRatio } = {}) {
+    if (!sizes) {
+      return;
+    }
+
     for (const sizeCur of sizes) {
       const newName = getRandomString();
 
@@ -154,9 +166,15 @@ class PrepareImages {
   async convert({ img, size, newFullName } = {}) {
     const width = Number(size);
 
-    await sharp(img.fullPath, { animated: true })
-      .resize({ width })
-      .toFile(newFullName);
+    try {
+      await sharp(img.fullPath, { animated: true })
+        .resize({ width })
+        .toFile(newFullName);
+    } catch (err) {
+      console.error(err);
+
+      return;
+    }
 
     console.log(`${img.name} converted to ${newFullName};`);
   }

@@ -47,7 +47,15 @@ class PrepareImages {
     let formattedImg = img;
     const sizes = [];
 
-    const meta = await sharp(img.fullPath).metadata();
+    let meta;
+
+    try {
+      meta = await sharp(img.fullPath).metadata();
+    } catch (err) {
+      console.error(err);
+
+      return;
+    }
 
     const { width, height } = meta;
 
@@ -152,9 +160,15 @@ class PrepareImages {
 
     makeDir(imgCurTargetDir);
 
-    await sharp(img.fullPath)
-      .resize({ width: cropVal, height: cropVal, fit: 'cover' })
-      .toFile(newFullName);
+    try {
+      await sharp(img.fullPath)
+        .resize({ width: cropVal, height: cropVal, fit: 'cover' })
+        .toFile(newFullName);
+    } catch (err) {
+      console.error(err);
+
+      return;
+    }
 
     const newSize = { width: cropVal, height: cropVal };
 
@@ -172,6 +186,10 @@ class PrepareImages {
    * @property target.invalidRatio {boolean}
    */
   async convertTargetEachSize({ img, sizes, invalidRatio } = {}) {
+    if (!sizes) {
+      return;
+    }
+
     for (const sizeCur of sizes) {
       const newName = getRandomString();
 
@@ -213,10 +231,16 @@ class PrepareImages {
   async convert({ img, size, newFullName } = {}) {
     const width = Number(size);
 
-    await sharp(img.fullPath)
-      // .grayscale()
-      .resize({ width })
-      .toFile(newFullName);
+    try {
+      await sharp(img.fullPath)
+        // .grayscale()
+        .resize({ width })
+        .toFile(newFullName);
+    } catch (err) {
+      console.error(err);
+
+      return;
+    }
 
     console.log(`${img.name} converted to ${newFullName}`);
   }
