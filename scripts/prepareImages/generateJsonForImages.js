@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const dir = 'C:\\Users\\K\\Downloads\\pics\\static\\_ready';
+const dir = 'C:\\Users\\K\\Downloads\\pics\\_ready';
 
 function readDirectory(dir) {
   const result = {};
