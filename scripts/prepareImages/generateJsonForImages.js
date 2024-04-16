@@ -15,7 +15,12 @@ function readDirectory(dir) {
     if (stats.isDirectory()) {
       result[item] = readDirectory(fullPath);
     } else {
-      result[item] = fullPath;
+      const pivot = '_ready';
+      const relativePathIndex = fullPath.indexOf(pivot) + pivot.length;
+      const str = fullPath.substring(relativePathIndex);
+      const strResult = str.replace(/\\/g, '/'); // todo: this is for windows only
+
+      result[item] = strResult.substring(1);
     }
   }
 
@@ -24,8 +29,9 @@ function readDirectory(dir) {
 
 const dirTree = readDirectory(dir);
 
-const result = JSON.stringify(dirTree, null, 2);
+// const result = JSON.stringify(dirTree, null, 2);
+const result = JSON.stringify(dirTree);
 
-fs.writeFileSync('./result.json', result);
+fs.writeFileSync('./img_bg.json', result);
 
 console.log('done');
