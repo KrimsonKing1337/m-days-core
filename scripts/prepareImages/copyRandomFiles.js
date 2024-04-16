@@ -64,4 +64,4 @@ async function randomFiles(amount = 100) {
   console.log('done');
 }
 
-randomFiles(500);
+randomFiles(100);

@@ -3,7 +3,7 @@ const path = require('path');
 
 const dir = 'C:\\Users\\K\\Downloads\\pics\\static\\_ready';
 
-function readDirectory() {
+function readDirectory(dir) {
   const result = {};
 
   const items = fs.readdirSync(dir);
@@ -22,8 +22,10 @@ function readDirectory() {
   return result;
 }
 
-const dirTree = readDirectory();
+const dirTree = readDirectory(dir);
 
 const result = JSON.stringify(dirTree, null, 2);
 
 fs.writeFileSync('./result.json', result);
+
+console.log('done');
