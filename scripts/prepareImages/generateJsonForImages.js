@@ -29,8 +29,7 @@ function readDirectory(dir) {
 
 const dirTree = readDirectory(dir);
 
-// const result = JSON.stringify(dirTree, null, 2);
-const result = JSON.stringify(dirTree);
+const result = JSON.stringify(dirTree, null, 2);
 
 fs.writeFileSync('./img_bg.json', result);
 

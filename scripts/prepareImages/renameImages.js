@@ -1,10 +1,11 @@
-import fs from 'fs';
-import path from 'path';
+const fs = require('fs');
+const path = require('path');
 
-import { rename } from 'node:fs/promises';
-import { nanoid } from 'nanoid';
+const { rename } = require('fs/promises');
 
-export function* readAllFiles(dir) {
+const { getRandomString } = require('./utils/getRandomString.js');
+
+function* readAllFiles(dir) {
   const files = fs.readdirSync(dir, { withFileTypes: true });
 
   for (const file of files) {
@@ -16,13 +17,17 @@ export function* readAllFiles(dir) {
   }
 }
 
-const folder = 'C:\\Users\\K\\Downloads\\pics\\anime\\makoto-shinkai\\vkpic-925689';
+const folder = 'C:\\Users\\K\\Downloads\\0';
 
-for (const file of readAllFiles(folder)) {
-  const { dir, ext } = path.parse(file);
+async function renameFiles() {
+  for (const file of readAllFiles(folder)) {
+    const { dir, ext } = path.parse(file);
 
-  const uniq = nanoid();
-  const newName = `${uniq}${ext}`;
+    const uniq = getRandomString();
+    const newName = `${uniq}${ext}`;
 
-  await rename(file, path.join(dir, newName));
+    await rename(file, path.join(dir, newName));
+  }
 }
+
+renameFiles();

@@ -4,7 +4,7 @@ const { readDirR } = require('./utils');
 
 function convertVideoIntoGif() {
   const files = readDirR({
-    path: `\"C:\\Users\\K\\Downloads\\video_files\"`,
+    path: `\C:\\Users\\K\\Downloads\\Telegram Desktop\\ChatExport_2024-04-10\\video_files`,
     allowFormats: ['mp4'],
   });
 
