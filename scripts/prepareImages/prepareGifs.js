@@ -7,7 +7,7 @@ const { getRandomString } = require('./utils');
 const { readDirR } = require('./utils');
 const { makeDir } = require('./utils');
 const { removeDir } = require('./utils');
-const { getGifVariant } = require('./utils');
+const { getImageVariant } = require('./utils');
 const { getMaxWidth } = require('./utils');
 
 const paths = getPaths();
@@ -63,7 +63,7 @@ class PrepareImages {
 
     const { width, height } = meta;
 
-    const variant = getGifVariant({width, height});
+    const variant = getImageVariant({width, height});
 
     formattedImg.size = {
       width,

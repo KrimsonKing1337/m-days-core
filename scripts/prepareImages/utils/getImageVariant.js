@@ -3,7 +3,7 @@
  * @param width {number}
  * @param height {number}
  */
-function getGifVariant({ width, height } = {}) {
+function getImageVariant({ width, height } = {}) {
   if (width > height) {
     if (width / height > 1 && width / height < 1.3333) {
       return 'sq';
@@ -23,4 +23,4 @@ function getGifVariant({ width, height } = {}) {
   return 'sq';
 }
 
-module.exports = { getGifVariant };
+module.exports = { getImageVariant };
