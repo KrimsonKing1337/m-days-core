@@ -7,6 +7,7 @@ const { getRandomString } = require('./utils');
 const { readDirR } = require('./utils');
 const { makeDir } = require('./utils');
 const { removeDir } = require('./utils');
+const { getImageVariant } = require('./utils/index.js');
 
 const paths = getPaths();
 
@@ -59,6 +60,8 @@ class PrepareImages {
 
     const { width, height } = meta;
 
+    const variant = getImageVariant({width, height});
+
     formattedImg.size = {
       width,
       height,
@@ -72,6 +75,7 @@ class PrepareImages {
         img: formattedImg,
         sizes,
         tooSmall: true,
+        variant,
       };
     }
 
@@ -93,6 +97,7 @@ class PrepareImages {
           img: formattedImg,
           sizes,
           invalidRatio: true,
+          variant,
         };
       }
     }
@@ -108,6 +113,7 @@ class PrepareImages {
     return {
       img: formattedImg,
       sizes,
+      variant,
     };
   }
 
@@ -184,8 +190,9 @@ class PrepareImages {
    * @property target.img {object}
    * @property target.sizes {string[]}
    * @property target.invalidRatio {boolean}
+   * @property target.variant {string}
    */
-  async convertTargetEachSize({ img, sizes, invalidRatio } = {}) {
+  async convertTargetEachSize({ img, sizes, invalidRatio, variant } = {}) {
     if (!sizes) {
       return;
     }
@@ -196,14 +203,14 @@ class PrepareImages {
       const indexStart = paths.imagesSourcesPath.length;
       const newSubFolder = img.fullPathWithoutName.substring(indexStart);
 
-      let imgCurTargetDir = `${this.imagesTargetPath}/${newSubFolder}/${sizeCur}`;
+      let imgCurTargetDir = `${this.imagesTargetPath}/${newSubFolder}/${variant}/${sizeCur}`;
 
       if (sizeCur < 640) {
-        imgCurTargetDir = `${this.imagesTargetPath}/${newSubFolder}/100`;
+        imgCurTargetDir = `${this.imagesTargetPath}/${newSubFolder}/${variant}/100`;
       }
 
       if (invalidRatio) {
-        imgCurTargetDir = `${this.imagesTargetPath}/${newSubFolder}/_invalid-ratio`;
+        imgCurTargetDir = `${this.imagesTargetPath}/${newSubFolder}/${variant}/_invalid-ratio`;
       }
 
       const newFullName = `${imgCurTargetDir}/${newName}.jpg`;
