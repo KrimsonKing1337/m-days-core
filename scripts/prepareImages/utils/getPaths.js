@@ -1,22 +1,17 @@
 const path = require('path');
 
-const mDaysDirRoot = path.resolve(__dirname, '../../../../');
+const sourceImagesPath = 'D:\\Projects\\m-days\\01. digital\\m-days-public-images_originals';
+const destinationImagesPath = 'D:\\Projects\\m-days\\01. digital\\m-days-public-images';
 
-const photosSourcesPath = 'C:\\Users\\K\\Downloads\\pics';
-const photosTargetPath = path.join(photosSourcesPath, './_ready');
-const photosTempPath = path.join(photosSourcesPath, './_temp');
+const imagesSourcesPath = path.join(sourceImagesPath, './_ready_random/static');
+const imagesTargetPath = path.join(destinationImagesPath, './_ready/static');
+const imagesTempPath =  path.join(destinationImagesPath, './_ready/static/_temp');
 
-const imagesSourcesPath = 'C:\\Users\\K\\Downloads\\pics\\_ready_random\\static';
-// const imagesTargetPath = 'C:\\Users\\K\\Downloads\\pics\\static\\_ready';
-const imagesTargetPath = 'C:\\Users\\K\\Downloads\\pics\\_ready\\static';
-const imagesTempPath = 'C:\\Users\\K\\Downloads\\pics\\_ready\\static\\_temp';
+const gifsSourcesPath = path.join(sourceImagesPath, './_ready_random/dynamic');
+const gifsTargetPath = path.join(destinationImagesPath, './_ready/dynamic');
+const gifsTempPath = path.join(destinationImagesPath, './_ready/dynamic/_temp');
 
-const gifsSourcesPath = 'C:\\Users\\K\\Downloads\\pics\\_ready_random\\dynamic';
-// const gifsTargetPath = 'C:\\Users\\K\\Downloads\\pics\\dynamic\\_ready';
-const gifsTargetPath = 'C:\\Users\\K\\Downloads\\pics\\_ready\\dynamic';
-const gifsTempPath = 'C:\\Users\\K\\Downloads\\pics\\_ready\\dynamic\\_temp';
-
-const randomImagesSourcesPath = 'C:\\Users\\K\\Downloads\\pics';
+const randomImagesSourcesPath = sourceImagesPath;
 const randomImagesTargetPath = path.join(randomImagesSourcesPath, './_ready_random');
 const randomImagesTempPath = path.join(randomImagesSourcesPath, './_temp');
 
@@ -24,10 +19,6 @@ const randomImagesTempPath = path.join(randomImagesSourcesPath, './_temp');
  *
  * @returns {
  *  {
- *    photosTempPath: string,
- *    photosSourcesPath: string,
- *    photosTargetPath: string,
- *
  *    imagesSourcesPath: string,
  *    imagesTargetPath: string,
  *    imagesTempPath: string,
@@ -44,10 +35,6 @@ const randomImagesTempPath = path.join(randomImagesSourcesPath, './_temp');
  */
 function getPaths() {
   return {
-    photosSourcesPath,
-    photosTargetPath,
-    photosTempPath,
-
     imagesSourcesPath,
     imagesTargetPath,
     imagesTempPath,

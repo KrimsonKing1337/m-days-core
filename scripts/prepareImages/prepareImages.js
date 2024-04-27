@@ -220,6 +220,7 @@ class PrepareImages {
       await this.convert({
         img,
         size: sizeCur,
+        variant,
         newName,
         newFullName,
       });
@@ -232,16 +233,27 @@ class PrepareImages {
    * @property img.name {string}
    * @property img.ext {string}
    * @param size {string}
+   * @param variant {string}
    * @param newName {string}
    * @param newFullName {string}
    */
-  async convert({ img, size, newFullName } = {}) {
-    const width = Number(size);
+  async convert({ img, size, variant, newFullName } = {}) {
+    const sizeAsNumber = Number(size);
+
+    let options = {
+      width: sizeAsNumber,
+    }
+
+    if (variant === 'v') {
+      options = {
+        height: sizeAsNumber,
+      }
+    }
 
     try {
       await sharp(img.fullPath)
         // .grayscale()
-        .resize({ width })
+        .resize(options)
         .toFile(newFullName);
     } catch (err) {
       console.error(err);

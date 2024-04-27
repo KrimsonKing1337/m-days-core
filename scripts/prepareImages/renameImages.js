@@ -17,7 +17,7 @@ function* readAllFiles(dir) {
   }
 }
 
-const folder = 'C:\\Users\\K\\Downloads\\0';
+const folder = 'C:\\Users\\K\\Downloads\\Telegram Desktop';
 
 async function renameFiles() {
   for (const file of readAllFiles(folder)) {

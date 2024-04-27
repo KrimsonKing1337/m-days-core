@@ -1,7 +1,10 @@
 const fs = require('fs');
 const path = require('path');
 
-const dir = 'C:\\Users\\K\\Downloads\\pics\\_ready';
+const publicPath = 'D:\\Projects\\m-days\\01. digital\\m-days-public';
+const publicImagesPath = 'D:\\Projects\\m-days\\01. digital\\m-days-public-images';
+
+const dirReadyPath = path.join(publicImagesPath, './_ready');
 
 function readDirectory(dir) {
   const result = {};
@@ -27,10 +30,11 @@ function readDirectory(dir) {
   return result;
 }
 
-const dirTree = readDirectory(dir);
-
+const dirTree = readDirectory(dirReadyPath);
 const result = JSON.stringify(dirTree, null, 2);
 
-fs.writeFileSync('./img_bg.json', result);
+const jsonPath = path.join(publicPath, './img_bg.json');
+
+fs.writeFileSync(jsonPath, result);
 
 console.log('done');
