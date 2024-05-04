@@ -17,3 +17,13 @@ export type WeatherResp = {
   timezone_abbreviation: string;
   utc_offset_seconds: number;
 }
+
+export type Preset = {
+  id?: string;
+  staticTopics: string;
+  dynamicTopics: string;
+  formats: string;
+  resolution: string;
+  orientation?: string;
+  skin: string;
+};
