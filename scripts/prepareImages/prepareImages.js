@@ -251,7 +251,7 @@ class PrepareImages {
     }
 
     try {
-      await sharp(img.fullPath)
+      await sharp(img.fullPath, { limitInputPixels: false })
         // .grayscale()
         .resize(options)
         .toFile(newFullName);

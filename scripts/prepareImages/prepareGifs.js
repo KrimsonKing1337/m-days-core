@@ -148,9 +148,21 @@ class PrepareImages {
 
       makeDir(imgCurTargetDir);
 
-      await fs.cp(img.fullPath, newFullName);
+      if (sizeCur < 640) {
+        await fs.cp(img.fullPath, newFullName);
 
-      console.log(`${img.name} copied to ${newFullName};`);
+        console.log(`${img.name} copied to ${newFullName};`);
+
+        continue;
+      }
+
+      await this.convert({
+        img,
+        size: sizeCur,
+        variant,
+        newName,
+        newFullName,
+      });
     }
   }
 
@@ -160,15 +172,26 @@ class PrepareImages {
    * @property img.name {string}
    * @property img.ext {string}
    * @param size {string}
+   * @param variant {string}
    * @param newName {string}
    * @param newFullName {string}
    */
-  async convert({ img, size, newFullName } = {}) {
-    const width = Number(size);
+  async convert({ img, size, variant, newFullName } = {}) {
+    const sizeAsNumber = Number(size);
+
+    let options = {
+      width: sizeAsNumber,
+    }
+
+    if (variant === 'v') {
+      options = {
+        height: sizeAsNumber,
+      }
+    }
 
     try {
-      await sharp(img.fullPath, { animated: true })
-        .resize({ width })
+      await sharp(img.fullPath, { animated: true, limitInputPixels: false })
+        .resize(options)
         .toFile(newFullName);
     } catch (err) {
       console.error(err);
