@@ -23,7 +23,7 @@ class PrepareImages {
     this.imagesTargetPath = imagesTargetPath;
     this.tempPath = imagesTempPath;
 
-    this.allowSizes = [640, 1280, 1600, 1920, 2560, 3840, 5210, 7680];
+    this.allowSizes = [128, 240, 360, 480, 640, 1280, 1600, 1920, 2560, 3840, 5210, 7680];
     this.allowFormats = ['bmp', 'jng', 'jp2', 'jpc', 'jpeg', 'jpg', 'png', 'ptif', 'tiff', 'webp'];
   }
 
@@ -67,8 +67,8 @@ class PrepareImages {
       height,
     };
 
-    // если ширина меньше 640 - то копируем без изменений
-    if (width < 640) {
+    // если ширина меньше 128 - то копируем без изменений
+    if (width < 128) {
       sizes.push(width);
 
       return {
@@ -156,7 +156,7 @@ class PrepareImages {
 
     const cropVal = size.height < size.width ? size.height : size.width;
 
-    if (cropVal < 640) {
+    if (cropVal < 128) {
       return false;
     }
 
@@ -205,7 +205,7 @@ class PrepareImages {
 
       let imgCurTargetDir = `${this.imagesTargetPath}/${newSubFolder}/${variant}/${sizeCur}`;
 
-      if (sizeCur < 640) {
+      if (sizeCur < 128) {
         imgCurTargetDir = `${this.imagesTargetPath}/${newSubFolder}/${variant}/100`;
       }
 

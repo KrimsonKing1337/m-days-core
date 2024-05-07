@@ -24,7 +24,7 @@ class PrepareImages {
     this.imagesTargetPath = imagesTargetPath;
     this.tempPath = imagesTempPath;
 
-    this.allowSizes = [640, 1280, 1600, 1920, 2560, 3840, 5210, 7680];
+    this.allowSizes = [128, 240, 360, 480, 640, 1280, 1600, 1920, 2560, 3840, 5210, 7680];
     this.allowFormats = ['gif'];
   }
 
@@ -70,7 +70,7 @@ class PrepareImages {
       height,
     };
 
-    if (width < 640) {
+    if (width < 128) {
       sizes.push(width);
 
       return {
@@ -136,7 +136,7 @@ class PrepareImages {
 
       let imgCurTargetDir = `${this.imagesTargetPath}/${newSubFolder}/${variant}/${sizeCur}`;
 
-      if (sizeCur < 640) {
+      if (sizeCur < 128) {
         imgCurTargetDir = `${this.imagesTargetPath}/${newSubFolder}/${variant}/100`;
       }
 
@@ -148,7 +148,7 @@ class PrepareImages {
 
       makeDir(imgCurTargetDir);
 
-      if (sizeCur < 640) {
+      if (sizeCur < 128) {
         await fs.cp(img.fullPath, newFullName);
 
         console.log(`${img.name} copied to ${newFullName};`);
