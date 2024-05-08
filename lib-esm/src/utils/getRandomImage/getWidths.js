@@ -14,17 +14,29 @@ export function getWidths(resolution) {
         return ['2560', '1920'];
     }
     if (width === '1920') {
-        return ['1920', '1600', '1280'];
+        return ['1920'];
     }
     if (width === '1600') {
         return ['1600', '1280'];
     }
     if (width === '1280') {
-        return ['1280', '640'];
+        return ['1600', '1280'];
     }
     if (width === '640') {
-        return ['640', '100'];
+        return ['640', '480'];
     }
-    return ['1920', '1600', '1280'];
+    if (width === '480') {
+        return ['480', '360'];
+    }
+    if (width === '360') {
+        return ['480', '360', '240'];
+    }
+    if (width === '240') {
+        return ['360', '240'];
+    }
+    if (width === '128') {
+        return ['128', '100'];
+    }
+    return ['1920'];
 }
 //# sourceMappingURL=getWidths.js.map
