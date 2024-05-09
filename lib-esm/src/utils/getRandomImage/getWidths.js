@@ -1,3 +1,4 @@
+export var allWidths = ['128', '240', '360', '480', '640', '1280', '1600', '1920', '2560', '3840', '5210', '7680'];
 export function getWidths(resolution) {
     var resolutionAsArr = resolution.split('*');
     var width = resolutionAsArr[0];

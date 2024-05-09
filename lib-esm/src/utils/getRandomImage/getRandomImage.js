@@ -1,15 +1,14 @@
-import { randomInt } from 'utils/randomInt';
-import { getRandomStaticImage } from './getRandomStaticImage.js';
-import { getRandomDynamicImage } from './getRandomDynamicImage.js';
+import { randomInt } from '../randomInt.js';
+import { getRandomImageByPrefix } from './getRandomImageByPrefix.js';
 export var getRandomImage = function (presetInfo, imgBgJson) {
     if (!presetInfo.staticTopics) {
-        return getRandomDynamicImage(presetInfo, imgBgJson);
+        return getRandomImageByPrefix('dynamic', presetInfo, imgBgJson);
     }
     if (!presetInfo.dynamicTopics) {
-        return getRandomStaticImage(presetInfo, imgBgJson);
+        return getRandomImageByPrefix('static', presetInfo, imgBgJson);
     }
-    var randomStaticImage = getRandomStaticImage(presetInfo, imgBgJson);
-    var randomDynamicImage = getRandomDynamicImage(presetInfo, imgBgJson);
+    var randomStaticImage = getRandomImageByPrefix('static', presetInfo, imgBgJson);
+    var randomDynamicImage = getRandomImageByPrefix('dynamic', presetInfo, imgBgJson);
     if (randomStaticImage && randomDynamicImage) {
         var rInt = randomInt(0, 1);
         if (rInt === 0) {
