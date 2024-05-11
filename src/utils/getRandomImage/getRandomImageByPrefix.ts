@@ -6,6 +6,24 @@ import type { Preset } from 'src/@types.js';
 import { allWidths, getWidths } from './getWidths.js';
 import { getFormats } from './getFormats.js';
 
+/*
+  что здесь происходит.
+  получаем ширины из разрешения (его получаем из инфо о пресете),
+  получаем формат (горизонталь, вертикаль и квадрат), так же из инфо о пресете.
+  получаем список топиков (темы для отображения), тоже из инфо о пресете.
+
+  получаем рандомный топик.
+  далее фильтруем форматы. берём только те, что есть и в инфо о пресете, и в json.
+  то же самое делаем и с ширинами.
+  если после фильтра значений не будет - то берём ближайшую из списка.
+  в приоритете - более высокое разрешение. если его нет - то берём более низкое.
+  далее получаем рандомный формат и рандомную ширину.
+  формируем путь, убираем слэши на точки. чтобы lodash.get мог получить для нас значение из json.
+  это же действие делаем и в других местах.
+  получится массив из изображений.
+  из них берём случайное и возвращаем его.
+*/
+
 export function getRandomImageByPrefix(prefix: string, presetInfo: Preset, imgBgJson: string) {
   const { staticTopics, dynamicTopics, resolution, orientation } = presetInfo;
 
@@ -54,10 +72,11 @@ export function getRandomImageByPrefix(prefix: string, presetInfo: Preset, imgBg
 
     let newValue = values[values.length - 1];
 
-    // фильтруем массив с разрешением из пресета массивом из доступных разрешений из json
+    // фильтруем массив с разрешением из пресета массивом из доступных разрешений из json, после чего сортируем
     const widthsFiltered = widthAsArr.filter((widthCur) => values.includes(widthCur)).sort();
 
     // берём последнее значение из доступных
+    // todo: почему здесь берём последнее, а не первое? проверить ещё раз как это работает
     newValue = widthsFiltered[widthsFiltered.length - 1];
 
     // если массив значений пуст, а значит и нет значения - то ищем ближайшее к нему. в приоритете следующее по списку
@@ -103,7 +122,5 @@ export function getRandomImageByPrefix(prefix: string, presetInfo: Preset, imgBg
   const imagesInOneWidthObj = get(imgBgJson, fullPathWithoutSlashes);
   const imagesInOneWidthObjRandomIndex = randomInt(0, Object.keys(imagesInOneWidthObj).length - 1);
 
-  const randomImage = Object.values(imagesInOneWidthObj)[imagesInOneWidthObjRandomIndex];
-
-  return randomImage;
+  return Object.values(imagesInOneWidthObj)[imagesInOneWidthObjRandomIndex];
 }
