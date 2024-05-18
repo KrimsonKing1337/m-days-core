@@ -1,6 +1,6 @@
 import { get } from 'lodash';
 
-import { randomInt } from '../randomInt.js';
+import { getRandomInt } from '../getRandomInt.js';
 import type { Preset } from 'src/@types.js';
 
 import { allWidths, getWidths } from './getWidths.js';
@@ -24,7 +24,7 @@ import { getFormats } from './getFormats.js';
   из них берём случайное и возвращаем его.
 */
 
-export function getRandomImageByPrefix(prefix: string, presetInfo: Preset, imgBgJson: string) {
+export function getRandomImageInfoByPrefix(prefix: string, presetInfo: Preset, imgBgJson: string) {
   const { staticTopics, dynamicTopics, resolution, orientation } = presetInfo;
 
   const topics = prefix === 'static' ? staticTopics : dynamicTopics;
@@ -33,7 +33,7 @@ export function getRandomImageByPrefix(prefix: string, presetInfo: Preset, imgBg
   const topicsAsArr = topics.split(', ');
   const formats = getFormats(orientation as string);
 
-  const randomTopicIndex = randomInt(0, topicsAsArr.length - 1);
+  const randomTopicIndex = getRandomInt(0, topicsAsArr.length - 1);
 
   const randomTopic = topicsAsArr[randomTopicIndex];
 
@@ -110,7 +110,7 @@ export function getRandomImageByPrefix(prefix: string, presetInfo: Preset, imgBg
   const availableFormatsWidthsKeys2 = Object.keys(availableFormatsWidths);
   const availableFormatsWidthsValues = Object.values(availableFormatsWidths);
 
-  const availableFormatsRandomIndex = randomInt(0, availableFormatsWidthsKeys2.length - 1);
+  const availableFormatsRandomIndex = getRandomInt(0, availableFormatsWidthsKeys2.length - 1);
 
   const randomFormat = availableFormatsWidthsKeys2[availableFormatsRandomIndex];
   const randomWidth = availableFormatsWidthsValues[availableFormatsRandomIndex];
@@ -120,7 +120,7 @@ export function getRandomImageByPrefix(prefix: string, presetInfo: Preset, imgBg
   const fullPathWithoutSlashes = fullPath.replace(/\//g, '.');
 
   const imagesInOneWidthObj = get(imgBgJson, fullPathWithoutSlashes);
-  const imagesInOneWidthObjRandomIndex = randomInt(0, Object.keys(imagesInOneWidthObj).length - 1);
+  const imagesInOneWidthObjRandomIndex = getRandomInt(0, Object.keys(imagesInOneWidthObj).length - 1);
 
   return Object.values(imagesInOneWidthObj)[imagesInOneWidthObjRandomIndex];
 }
