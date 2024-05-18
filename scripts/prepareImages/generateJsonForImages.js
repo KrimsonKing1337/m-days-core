@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
+const { sep } = path;
+
 const publicPath = 'D:\\Projects\\m-days\\01. digital\\m-days-public';
 const publicImagesPath = 'D:\\Projects\\m-days\\01. digital\\m-days-public-images';
 
@@ -21,9 +23,20 @@ function readDirectory(dir) {
       const pivot = '_ready';
       const relativePathIndex = fullPath.indexOf(pivot) + pivot.length;
       const str = fullPath.substring(relativePathIndex);
-      const strResult = str.replace(/\\/g, '/'); // todo: this is for windows only
 
-      result[item] = strResult.substring(1);
+      let strResult = str;
+
+      if (sep === '\\') {
+        // windows
+        strResult = str.replace(/\\/g, '/');
+      }
+
+      const { size } = fs.statSync(fullPath);
+
+      result[item] = {
+        path: strResult.substring(1),
+        size,
+      };
     }
   }
 

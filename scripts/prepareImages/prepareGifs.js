@@ -61,7 +61,7 @@ class PrepareImages {
       return;
     }
 
-    const { width, height, size } = meta;
+    const { width, height } = meta;
 
     const variant = getImageVariant({width, height});
 
