@@ -1,14 +1,31 @@
 import { get } from 'lodash';
-import { randomInt } from '../randomInt.js';
-import { getWidths, allWidths } from './getWidths.js';
+import { getRandomInt } from '../getRandomInt.js';
+import { allWidths, getWidths } from './getWidths.js';
 import { getFormats } from './getFormats.js';
-export function getRandomImageByPrefix(prefix, presetInfo, imgBgJson) {
+/*
+  что здесь происходит.
+  получаем ширины из разрешения (его получаем из инфо о пресете),
+  получаем формат (горизонталь, вертикаль и квадрат), так же из инфо о пресете.
+  получаем список топиков (темы для отображения), тоже из инфо о пресете.
+
+  получаем рандомный топик.
+  далее фильтруем форматы. берём только те, что есть и в инфо о пресете, и в json.
+  то же самое делаем и с ширинами.
+  если после фильтра значений не будет - то берём ближайшую из списка.
+  в приоритете - более высокое разрешение. если его нет - то берём более низкое.
+  далее получаем рандомный формат и рандомную ширину.
+  формируем путь, убираем слэши на точки. чтобы lodash.get мог получить для нас значение из json.
+  это же действие делаем и в других местах.
+  получится массив из изображений.
+  из них берём случайное и возвращаем его.
+*/
+export function getRandomImageInfoByPrefix(prefix, presetInfo, imgBgJson) {
     var staticTopics = presetInfo.staticTopics, dynamicTopics = presetInfo.dynamicTopics, resolution = presetInfo.resolution, orientation = presetInfo.orientation;
     var topics = prefix === 'static' ? staticTopics : dynamicTopics;
     var widthAsArr = getWidths(resolution);
     var topicsAsArr = topics.split(', ');
     var formats = getFormats(orientation);
-    var randomTopicIndex = randomInt(0, topicsAsArr.length - 1);
+    var randomTopicIndex = getRandomInt(0, topicsAsArr.length - 1);
     var randomTopic = topicsAsArr[randomTopicIndex];
     var availableFormatsPath = "".concat(prefix, "/").concat(randomTopic).replace(/\//g, '.');
     var availableFormatsObj = get(imgBgJson, availableFormatsPath);
@@ -33,9 +50,10 @@ export function getRandomImageByPrefix(prefix, presetInfo, imgBgJson) {
         var key = availableFormatsWidthsKeys1[i];
         var values = availableFormatsWidths[key];
         var newValue = values[values.length - 1];
-        // фильтруем массив с разрешением из пресета массивом из доступных разрешений из json
+        // фильтруем массив с разрешением из пресета массивом из доступных разрешений из json, после чего сортируем
         var widthsFiltered = widthAsArr.filter(function (widthCur) { return values.includes(widthCur); }).sort();
         // берём последнее значение из доступных
+        // todo: почему здесь берём последнее, а не первое? проверить ещё раз как это работает
         newValue = widthsFiltered[widthsFiltered.length - 1];
         // если массив значений пуст, а значит и нет значения - то ищем ближайшее к нему. в приоритете следующее по списку
         if (!newValue) {
@@ -62,14 +80,13 @@ export function getRandomImageByPrefix(prefix, presetInfo, imgBgJson) {
     }
     var availableFormatsWidthsKeys2 = Object.keys(availableFormatsWidths);
     var availableFormatsWidthsValues = Object.values(availableFormatsWidths);
-    var availableFormatsRandomIndex = randomInt(0, availableFormatsWidthsKeys2.length - 1);
+    var availableFormatsRandomIndex = getRandomInt(0, availableFormatsWidthsKeys2.length - 1);
     var randomFormat = availableFormatsWidthsKeys2[availableFormatsRandomIndex];
     var randomWidth = availableFormatsWidthsValues[availableFormatsRandomIndex];
     var fullPath = "".concat(prefix, "/").concat(randomTopic, "/").concat(randomFormat, "/").concat(randomWidth);
     var fullPathWithoutSlashes = fullPath.replace(/\//g, '.');
     var imagesInOneWidthObj = get(imgBgJson, fullPathWithoutSlashes);
-    var imagesInOneWidthObjRandomIndex = randomInt(0, Object.keys(imagesInOneWidthObj).length - 1);
-    var randomImage = Object.values(imagesInOneWidthObj)[imagesInOneWidthObjRandomIndex];
-    return randomImage;
+    var imagesInOneWidthObjRandomIndex = getRandomInt(0, Object.keys(imagesInOneWidthObj).length - 1);
+    return Object.values(imagesInOneWidthObj)[imagesInOneWidthObjRandomIndex];
 }
-//# sourceMappingURL=getRandomImageByPrefix.js.map
+//# sourceMappingURL=getRandomImageInfoByPrefix.js.map
