@@ -24,6 +24,7 @@ export type Preset = {
     resolution: string;
     orientation?: string;
     skin: string;
+    fileSize: string;
 };
 export type ImageJson = {
     path: string;

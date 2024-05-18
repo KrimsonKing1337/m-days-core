@@ -20,7 +20,7 @@ import { getFormats } from './getFormats.js';
   из них берём случайное и возвращаем его.
 */
 export function getRandomImageInfoByPrefix(prefix, presetInfo, imgBgJson) {
-    var staticTopics = presetInfo.staticTopics, dynamicTopics = presetInfo.dynamicTopics, resolution = presetInfo.resolution, orientation = presetInfo.orientation;
+    var staticTopics = presetInfo.staticTopics, dynamicTopics = presetInfo.dynamicTopics, resolution = presetInfo.resolution, orientation = presetInfo.orientation, fileSize = presetInfo.fileSize;
     var topics = prefix === 'static' ? staticTopics : dynamicTopics;
     var widthAsArr = getWidths(resolution);
     var topicsAsArr = topics.split(', ');
@@ -86,7 +86,13 @@ export function getRandomImageInfoByPrefix(prefix, presetInfo, imgBgJson) {
     var fullPath = "".concat(prefix, "/").concat(randomTopic, "/").concat(randomFormat, "/").concat(randomWidth);
     var fullPathWithoutSlashes = fullPath.replace(/\//g, '.');
     var imagesInOneWidthObj = get(imgBgJson, fullPathWithoutSlashes);
-    var imagesInOneWidthObjRandomIndex = getRandomInt(0, Object.keys(imagesInOneWidthObj).length - 1);
-    return Object.values(imagesInOneWidthObj)[imagesInOneWidthObjRandomIndex];
+    var filteredImagesInOneWidth = Object.values(imagesInOneWidthObj);
+    if (fileSize) {
+        filteredImagesInOneWidth = filteredImagesInOneWidth.filter(function (imageCur) {
+            return Number(imageCur.size) <= Number(fileSize);
+        });
+    }
+    var imagesInOneWidthObjRandomIndex = getRandomInt(0, filteredImagesInOneWidth.length - 1);
+    return filteredImagesInOneWidth[imagesInOneWidthObjRandomIndex];
 }
 //# sourceMappingURL=getRandomImageInfoByPrefix.js.map

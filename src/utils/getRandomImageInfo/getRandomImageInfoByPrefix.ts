@@ -1,7 +1,7 @@
 import { get } from 'lodash';
 
 import { getRandomInt } from '../getRandomInt.js';
-import type { Preset } from 'src/@types.js';
+import type { ImageJson, Preset } from 'src/@types.js';
 
 import { allWidths, getWidths } from './getWidths.js';
 import { getFormats } from './getFormats.js';
@@ -25,7 +25,13 @@ import { getFormats } from './getFormats.js';
 */
 
 export function getRandomImageInfoByPrefix(prefix: string, presetInfo: Preset, imgBgJson: string) {
-  const { staticTopics, dynamicTopics, resolution, orientation } = presetInfo;
+  const {
+    staticTopics,
+    dynamicTopics,
+    resolution,
+    orientation,
+    fileSize,
+  } = presetInfo;
 
   const topics = prefix === 'static' ? staticTopics : dynamicTopics;
 
@@ -120,7 +126,17 @@ export function getRandomImageInfoByPrefix(prefix: string, presetInfo: Preset, i
   const fullPathWithoutSlashes = fullPath.replace(/\//g, '.');
 
   const imagesInOneWidthObj = get(imgBgJson, fullPathWithoutSlashes);
-  const imagesInOneWidthObjRandomIndex = getRandomInt(0, Object.keys(imagesInOneWidthObj).length - 1);
 
-  return Object.values(imagesInOneWidthObj)[imagesInOneWidthObjRandomIndex];
+  let filteredImagesInOneWidth = Object.values(imagesInOneWidthObj) as ImageJson[];
+
+  // todo: маловероятно, но может возникнуть ситуация, что массив будет пуст
+  if (fileSize) {
+    filteredImagesInOneWidth = filteredImagesInOneWidth.filter((imageCur: ImageJson) => {
+      return Number(imageCur.size) <= Number(fileSize);
+    });
+  }
+
+  const imagesInOneWidthObjRandomIndex = getRandomInt(0, filteredImagesInOneWidth.length - 1);
+
+  return filteredImagesInOneWidth[imagesInOneWidthObjRandomIndex];
 }
