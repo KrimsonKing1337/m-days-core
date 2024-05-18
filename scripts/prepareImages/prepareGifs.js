@@ -81,18 +81,6 @@ class PrepareImages {
       };
     }
 
-    // 3mb
-    if (size > 3000000) {
-      sizes.push(width);
-
-      return {
-        img: formattedImg,
-        sizes,
-        tooHeavy: true,
-        variant,
-      };
-    }
-
     const delta = (width / height);
 
     if (delta < 1 || delta > 2) {
@@ -199,7 +187,7 @@ class PrepareImages {
     };
   }
 
-  async convertTargetEachSize({ img, sizes, variant, invalidRatio, tooHeavy } = {}) {
+  async convertTargetEachSize({ img, sizes, variant, invalidRatio } = {}) {
     if (!sizes) {
       return;
     }
@@ -223,11 +211,6 @@ class PrepareImages {
       const newFullName = `${imgCurTargetDir}/${newName}.gif`;
 
       makeDir(imgCurTargetDir);
-
-      // если гифка больше 3мб - пропускаем её
-      if (tooHeavy) {
-        continue;
-      }
 
       if (sizeCur < 128) {
         await fs.cp(img.fullPath, newFullName);
