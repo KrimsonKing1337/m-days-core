@@ -2,7 +2,7 @@ const sharp = require('sharp');
 
 const { readDirR } = require('./utils');
 
-const dir = 'C:\\Users\\K\\Downloads\\pics\\static\\default';
+const dir = 'D:\\Projects\\m-days\\01. digital\\m-days-public-images_originals\\static\\default\\common\\0';
 
 async function makeItGrey() {
   const allowFormats = ['bmp', 'gif', 'jng', 'jp2', 'jpc', 'jpeg', 'jpg', 'png', 'ptif', 'tiff'];

@@ -193,7 +193,7 @@ class PrepareImages {
    * @property target.variant {string}
    */
   async convertTargetEachSize({ img, sizes, invalidRatio, variant } = {}) {
-    if (!sizes) {
+    if (!img || !sizes) {
       return;
     }
 

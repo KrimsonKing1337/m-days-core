@@ -81,29 +81,6 @@ class PrepareImages {
       };
     }
 
-    const delta = (width / height);
-
-    if (delta < 1 || delta > 2) {
-      const squareImg = await this.makeItSquare(formattedImg);
-
-      if (squareImg !== false) {
-        formattedImg = squareImg;
-
-        console.log(`${img.fullPath} was cropped to square;`);
-      } else {
-        console.log(`${img.fullPath} is not valid due ratio;`);
-
-        sizes.push(width);
-
-        return {
-          img: formattedImg,
-          sizes,
-          invalidRatio: true,
-          variant,
-        };
-      }
-    }
-
     const maxWidth = getMaxWidth(width);
 
     this.allowSizes.forEach((widthCur) => {
@@ -146,49 +123,8 @@ class PrepareImages {
     }
   }
 
-  /**
-   * @property img {object}
-   * @property img.fullPath {string}
-   * @property img.nameWithoutExt {string}
-   * @property img.size {object}
-   * @returns {string || false}
-   */
-  async makeItSquare(img) {
-    const { size } = img;
-
-    const cropVal = size.height < size.width ? size.height : size.width;
-
-    if (cropVal < 128) {
-      return false;
-    }
-
-    const newName = getRandomString();
-    const imgCurTargetDir = this.tempPath;
-    const newFullName = `${imgCurTargetDir}/${newName}.jpg`;
-
-    makeDir(imgCurTargetDir);
-
-    try {
-      await sharp(img.fullPath, { animated: true })
-        .resize({ width: cropVal, height: cropVal, fit: 'cover' })
-        .toFile(newFullName);
-    } catch (err) {
-      console.error(err);
-
-      return;
-    }
-
-    const newSize = { width: cropVal, height: cropVal };
-
-    return {
-      ...img,
-      size: newSize,
-      fullPath: newFullName,
-    };
-  }
-
   async convertTargetEachSize({ img, sizes, variant, invalidRatio } = {}) {
-    if (!sizes) {
+    if (!img || !sizes) {
       return;
     }
 
@@ -281,8 +217,6 @@ class PrepareImages {
     console.log('done');
   }
 }
-
-
 
 const prepareImages = new PrepareImages({
   imagesSourcesPath: paths.gifsSourcesPath,
