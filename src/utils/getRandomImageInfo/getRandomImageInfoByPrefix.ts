@@ -85,6 +85,7 @@ export function getRandomImageInfoByPrefix(prefix: string, presetInfo: Preset, i
 
     // если массив значений пуст, а значит и нет значения - то ищем ближайшее к нему.
     // в приоритете следующее по списку, далее ищем предыдущее по списку
+    // здесь я не беру тупо последнюю ширину, т.к. она может быть 5к при исходной в 640, например
     if (!newValue) {
       const indexOfNativeWidth = allWidths.indexOf(widthAsArr[0]);
 
