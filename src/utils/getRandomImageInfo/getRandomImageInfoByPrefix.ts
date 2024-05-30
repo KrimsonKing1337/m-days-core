@@ -71,27 +71,26 @@ export function getRandomImageInfoByPrefix(prefix: string, presetInfo: Preset, i
   }
 
   const availableFormatsWidthsKeys1 = Object.keys(availableFormatsWidths);
+  const availableFormatsWidths1 = {} as any;
 
   for (let i = 0; i < availableFormatsWidthsKeys1.length; i++) {
     const key = availableFormatsWidthsKeys1[i];
     const values = availableFormatsWidths[key];
 
-    let newValue = values[values.length - 1];
-
     // фильтруем массив с разрешением из пресета массивом из доступных разрешений из json, после чего сортируем
     const widthsFiltered = widthAsArr.filter((widthCur) => values.includes(widthCur)).sort();
 
-    // берём последнее значение из доступных
-    // todo: почему здесь берём последнее, а не первое? проверить ещё раз как это работает
-    newValue = widthsFiltered[widthsFiltered.length - 1];
+    // берём последнее значение из доступных (как самая большая ширина после требуемой)
+    let newValue = widthsFiltered[widthsFiltered.length - 1];
 
-    // если массив значений пуст, а значит и нет значения - то ищем ближайшее к нему. в приоритете следующее по списку
+    // если массив значений пуст, а значит и нет значения - то ищем ближайшее к нему.
+    // в приоритете следующее по списку, далее ищем предыдущее по списку
     if (!newValue) {
       const indexOfNativeWidth = allWidths.indexOf(widthAsArr[0]);
 
-      for (let i = 0; i < values.length; i++) {
-        const nextIndexFromNativeWidth = indexOfNativeWidth + 1;
-        const prevIndexFromNativeWidth = indexOfNativeWidth - 1;
+      for (let i = 0; i < allWidths.length; i++) {
+        const nextIndexFromNativeWidth = indexOfNativeWidth + i;
+        const prevIndexFromNativeWidth = indexOfNativeWidth - i;
 
         const nextValueFromNativeWidth = allWidths[nextIndexFromNativeWidth];
         const prevValueFromNativeWidth = allWidths[prevIndexFromNativeWidth];
@@ -110,11 +109,11 @@ export function getRandomImageInfoByPrefix(prefix: string, presetInfo: Preset, i
       }
     }
 
-    availableFormatsWidths[key] = newValue;
+    availableFormatsWidths1[key] = newValue;
   }
 
-  const availableFormatsWidthsKeys2 = Object.keys(availableFormatsWidths);
-  const availableFormatsWidthsValues = Object.values(availableFormatsWidths);
+  const availableFormatsWidthsKeys2 = Object.keys(availableFormatsWidths1);
+  const availableFormatsWidthsValues = Object.values(availableFormatsWidths1);
 
   const availableFormatsRandomIndex = getRandomInt(0, availableFormatsWidthsKeys2.length - 1);
 
