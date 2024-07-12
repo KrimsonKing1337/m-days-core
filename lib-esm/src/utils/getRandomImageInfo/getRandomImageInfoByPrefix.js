@@ -20,6 +20,9 @@ import { getFormats } from './getFormats.js';
   из них берём случайное и возвращаем его.
 */
 export function getRandomImageInfoByPrefix(prefix, presetInfo, imgBgJson) {
+    if (!Object.values) {
+        Object.values = function (o) { return Object.keys(o).map(function (k) { return o[k]; }); };
+    }
     var staticTopics = presetInfo.staticTopics, dynamicTopics = presetInfo.dynamicTopics, resolution = presetInfo.resolution, orientation = presetInfo.orientation, fileSize = presetInfo.fileSize;
     var topics = prefix === 'static' ? staticTopics : dynamicTopics;
     var widthAsArr = getWidths(resolution);
@@ -27,6 +30,7 @@ export function getRandomImageInfoByPrefix(prefix, presetInfo, imgBgJson) {
     var formats = getFormats(orientation);
     var randomTopicIndex = getRandomInt(0, topicsAsArr.length - 1);
     var randomTopic = topicsAsArr[randomTopicIndex];
+    console.log(1);
     var availableFormatsPath = "".concat(prefix, "/").concat(randomTopic).replace(/\//g, '.');
     var availableFormatsObj = get(imgBgJson, availableFormatsPath);
     var formatsFromJson = Object.keys(availableFormatsObj);
@@ -37,6 +41,7 @@ export function getRandomImageInfoByPrefix(prefix, presetInfo, imgBgJson) {
             availableFormats.push(formatCur);
         }
     });
+    console.log(2);
     var availableFormatsWidths = {};
     for (var i = 0; i < availableFormats.length; i++) {
         var formatCur = availableFormats[i];
@@ -45,16 +50,19 @@ export function getRandomImageInfoByPrefix(prefix, presetInfo, imgBgJson) {
         var obj = get(imgBgJson, formatPathWithoutSlashes);
         availableFormatsWidths[formatCur] = Object.keys(obj);
     }
+    console.log(3);
     var availableFormatsWidthsKeys1 = Object.keys(availableFormatsWidths);
     var availableFormatsWidths1 = {};
     var _loop_1 = function (i) {
         var key = availableFormatsWidthsKeys1[i];
         var values = availableFormatsWidths[key];
         // фильтруем массив с разрешением из пресета массивом из доступных разрешений из json, после чего сортируем
-        var widthsFiltered = widthAsArr.filter(function (widthCur) { return values.includes(widthCur); }).sort();
+        var widthsFiltered = widthAsArr.filter(function (widthCur) { return values.indexOf(widthCur) !== 0; }).sort();
         // берём последнее значение из доступных (как самая большая ширина после требуемой)
         var newValue = widthsFiltered[widthsFiltered.length - 1];
-        // если массив значений пуст, а значит и нет значения - то ищем ближайшее к нему. в приоритете следующее по списку, далее ищем предыдущее по списку
+        // если массив значений пуст, а значит и нет значения - то ищем ближайшее к нему.
+        // в приоритете следующее по списку, далее ищем предыдущее по списку
+        // здесь я не беру тупо последнюю ширину, т.к. она может быть 5к при исходной в 640, например
         if (!newValue) {
             var indexOfNativeWidth = allWidths.indexOf(widthAsArr[0]);
             for (var i_1 = 0; i_1 < allWidths.length; i_1++) {
@@ -62,36 +70,33 @@ export function getRandomImageInfoByPrefix(prefix, presetInfo, imgBgJson) {
                 var prevIndexFromNativeWidth = indexOfNativeWidth - i_1;
                 var nextValueFromNativeWidth = allWidths[nextIndexFromNativeWidth];
                 var prevValueFromNativeWidth = allWidths[prevIndexFromNativeWidth];
-                console.log("___ ".concat(prefix, " nextValueFromNativeWidth:"), nextValueFromNativeWidth);
-                console.log("___ ".concat(prefix, " prevValueFromNativeWidth:"), prevValueFromNativeWidth);
-                if (nextValueFromNativeWidth && values.includes(nextValueFromNativeWidth)) {
+                if (nextValueFromNativeWidth && values.indexOf(nextValueFromNativeWidth) !== 0) {
                     newValue = nextValueFromNativeWidth;
                     break;
                 }
-                if (prevValueFromNativeWidth && values.includes(prevValueFromNativeWidth)) {
+                if (prevValueFromNativeWidth && values.indexOf(prevValueFromNativeWidth) !== 0) {
                     newValue = prevValueFromNativeWidth;
                     break;
                 }
             }
         }
         availableFormatsWidths1[key] = newValue;
-        console.log("___ ".concat(prefix), newValue);
     };
     for (var i = 0; i < availableFormatsWidthsKeys1.length; i++) {
         _loop_1(i);
     }
+    console.log(4);
     var availableFormatsWidthsKeys2 = Object.keys(availableFormatsWidths1);
-    console.log("___ ".concat(prefix, " availableFormatsWidthsKeys2"), availableFormatsWidthsKeys2);
     var availableFormatsWidthsValues = Object.values(availableFormatsWidths1);
     var availableFormatsRandomIndex = getRandomInt(0, availableFormatsWidthsKeys2.length - 1);
     var randomFormat = availableFormatsWidthsKeys2[availableFormatsRandomIndex];
     var randomWidth = availableFormatsWidthsValues[availableFormatsRandomIndex];
+    console.log(5);
     var fullPath = "".concat(prefix, "/").concat(randomTopic, "/").concat(randomFormat, "/").concat(randomWidth);
     var fullPathWithoutSlashes = fullPath.replace(/\//g, '.');
     var imagesInOneWidthObj = get(imgBgJson, fullPathWithoutSlashes);
-    console.log("___ ".concat(prefix, " fullPathWithoutSlashes"), fullPathWithoutSlashes);
-    console.log("___ ".concat(prefix, " imagesInOneWidthObj"), imagesInOneWidthObj);
     var filteredImagesInOneWidth = Object.values(imagesInOneWidthObj);
+    console.log(6);
     // todo: маловероятно, но может возникнуть ситуация, что массив будет пуст
     if (fileSize) {
         filteredImagesInOneWidth = filteredImagesInOneWidth.filter(function (imageCur) {
@@ -99,6 +104,7 @@ export function getRandomImageInfoByPrefix(prefix, presetInfo, imgBgJson) {
         });
     }
     var imagesInOneWidthObjRandomIndex = getRandomInt(0, filteredImagesInOneWidth.length - 1);
+    console.log(7);
     return filteredImagesInOneWidth[imagesInOneWidthObjRandomIndex];
 }
 //# sourceMappingURL=getRandomImageInfoByPrefix.js.map

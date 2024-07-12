@@ -25,6 +25,11 @@ import { getFormats } from './getFormats.js';
 */
 
 export function getRandomImageInfoByPrefix(prefix: string, presetInfo: Preset, imgBgJson: string) {
+  // ie8, ios < 10 не поддерживают object.values
+  if (!Object.values) {
+    Object.values = (o: Record<string, string>) => Object.keys(o).map(k => o[k]);
+  }
+
   const {
     staticTopics,
     dynamicTopics,
