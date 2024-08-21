@@ -97,7 +97,6 @@ class PrepareImages {
           img: formattedImg,
           sizes,
           invalidRatio: true,
-          variant,
         };
       }
     }
@@ -180,6 +179,7 @@ class PrepareImages {
 
     return {
       ...img,
+      variant: 'sq',
       size: newSize,
       fullPath: newFullName,
     };
