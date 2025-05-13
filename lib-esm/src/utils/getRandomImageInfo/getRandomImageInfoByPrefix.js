@@ -20,19 +20,23 @@ import { getFormats } from './getFormats.js';
   из них берём случайное и возвращаем его.
 */
 export function getRandomImageInfoByPrefix(prefix, presetInfo, imgBgJson) {
+    console.log('getRandomImageInfoByPrefix');
     // ie8, ios < 10 не поддерживают object.values
     if (!Object.values) {
-        Object.values = function (o) { return Object.keys(o).map(function (k) { return o[k]; }); };
+        console.error('Does not support Object.values');
+        // Object.values = (o: Record<string, string>) => Object.keys(o).map(k => o[k]);
     }
     var staticTopics = presetInfo.staticTopics, dynamicTopics = presetInfo.dynamicTopics, resolution = presetInfo.resolution, orientation = presetInfo.orientation, fileSize = presetInfo.fileSize;
     var topics = prefix === 'static' ? staticTopics : dynamicTopics;
     var widthAsArr = getWidths(resolution);
     var topicsAsArr = topics.split(', ');
     var formats = getFormats(orientation);
+    console.log('1');
     var randomTopicIndex = getRandomInt(0, topicsAsArr.length - 1);
     var randomTopic = topicsAsArr[randomTopicIndex];
     var availableFormatsPath = "".concat(prefix, "/").concat(randomTopic).replace(/\//g, '.');
     var availableFormatsObj = get(imgBgJson, availableFormatsPath);
+    console.log('2');
     var formatsFromJson = Object.keys(availableFormatsObj);
     var availableFormats = [];
     formats.forEach(function (formatCur) {
@@ -41,6 +45,7 @@ export function getRandomImageInfoByPrefix(prefix, presetInfo, imgBgJson) {
             availableFormats.push(formatCur);
         }
     });
+    console.log('3');
     var availableFormatsWidths = {};
     for (var i = 0; i < availableFormats.length; i++) {
         var formatCur = availableFormats[i];
@@ -49,9 +54,9 @@ export function getRandomImageInfoByPrefix(prefix, presetInfo, imgBgJson) {
         var obj = get(imgBgJson, formatPathWithoutSlashes);
         availableFormatsWidths[formatCur] = Object.keys(obj);
     }
+    console.log('4');
     var availableFormatsWidthsKeys1 = Object.keys(availableFormatsWidths);
     var availableFormatsWidths1 = {};
-    console.log(1);
     var _loop_1 = function (i) {
         var key = availableFormatsWidthsKeys1[i];
         var values = availableFormatsWidths[key];
@@ -84,16 +89,16 @@ export function getRandomImageInfoByPrefix(prefix, presetInfo, imgBgJson) {
     for (var i = 0; i < availableFormatsWidthsKeys1.length; i++) {
         _loop_1(i);
     }
-    console.log(2);
+    console.log('5');
     var availableFormatsWidthsKeys2 = Object.keys(availableFormatsWidths1);
     var availableFormatsWidthsValues = Object.values(availableFormatsWidths1);
-    console.log(3);
     var availableFormatsRandomIndex = getRandomInt(0, availableFormatsWidthsKeys2.length - 1);
     var randomFormat = availableFormatsWidthsKeys2[availableFormatsRandomIndex];
     var randomWidth = availableFormatsWidthsValues[availableFormatsRandomIndex];
     var fullPath = "".concat(prefix, "/").concat(randomTopic, "/").concat(randomFormat, "/").concat(randomWidth);
     var fullPathWithoutSlashes = fullPath.replace(/\//g, '.');
     var imagesInOneWidthObj = get(imgBgJson, fullPathWithoutSlashes);
+    console.log('6');
     var filteredImagesInOneWidth = Object.values(imagesInOneWidthObj);
     // todo: маловероятно, но может возникнуть ситуация, что массив будет пуст
     if (fileSize) {
@@ -102,6 +107,7 @@ export function getRandomImageInfoByPrefix(prefix, presetInfo, imgBgJson) {
         });
     }
     var imagesInOneWidthObjRandomIndex = getRandomInt(0, filteredImagesInOneWidth.length - 1);
+    console.log('7');
     return filteredImagesInOneWidth[imagesInOneWidthObjRandomIndex];
 }
 //# sourceMappingURL=getRandomImageInfoByPrefix.js.map
