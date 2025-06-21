@@ -6,7 +6,7 @@
 function getImageVariant({ width, height } = {}) {
   if (width > height) {
     if (width / height > 1 && width / height < 1.3333) {
-      return 'sq';
+      return 's';
     }
 
     return 'h';
@@ -14,13 +14,13 @@ function getImageVariant({ width, height } = {}) {
 
   if (width < height) {
     if (width / height > 0.7 && width / height < 1) {
-      return 'sq';
+      return 's';
     }
 
     return 'v';
   }
 
-  return 'sq';
+  return 's';
 }
 
 module.exports = { getImageVariant };

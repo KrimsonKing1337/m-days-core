@@ -1,53 +1,112 @@
-const fs = require('fs');
+const fs = require('fs').promises;
 const path = require('path');
 
 const { sep } = path;
 
-const publicPath = 'D:\\Projects\\m-days\\01. digital\\m-days-public';
-const publicImagesPath = 'D:\\Projects\\m-days\\01. digital\\m-days-public-images';
+// const publicPath = 'D:\\Projects\\m-days\\01. digital\\m-days-public';
+const targetPath = './test';
+// const publicImagesPath = 'D:\\Projects\\m-days\\01. digital\\m-days-public-images';
+const sourcePath = 'D:/Projects/m-days/01. digital/m-days-public-images/test';
 
-const dirReadyPath = path.join(publicImagesPath, './_ready');
+// const dirReadyPath = path.join(publicImagesPath, './_ready');
 
-function readDirectory(dir) {
-  const result = {};
+/**
+ *
+ * @param dirPath string
+ */
+async function getItems(dirPath) {
+  const result = [];
 
-  const items = fs.readdirSync(dir);
+  const getItemsRecursively = async (dirPathRecursive) => {
+    const items = await fs.readdir(dirPathRecursive);
 
-  for (const item of items) {
-    const fullPath = path.join(dir, item);
-    const stats = fs.statSync(fullPath);
+    for (const item of items) {
+      const fullPath = path.join(dirPathRecursive, item);
+      const stats = await fs.stat(fullPath);
 
-    if (stats.isDirectory()) {
-      result[item] = readDirectory(fullPath);
-    } else {
-      const pivot = '_ready';
-      const relativePathIndex = fullPath.indexOf(pivot) + pivot.length;
-      const str = fullPath.substring(relativePathIndex);
+      if (stats.isDirectory()) {
+        await getItemsRecursively(fullPath);
+      } else {
+        let safetyFullPath = fullPath;
 
-      let strResult = str;
+        // меняем разделитель windows \\ на /
+        if (sep === '\\') {
+          safetyFullPath = safetyFullPath.replace(/\\/g, '/');
+        }
 
-      if (sep === '\\') {
-        // windows
-        strResult = str.replace(/\\/g, '/');
+        const { size } = await fs.stat(fullPath);
+
+        const relativePath = safetyFullPath.replace(`${sourcePath}/`, '');
+        const relativePathSplit = relativePath.split('/');
+
+        // например: static/anime/attack-on-titan/h/1920/-_RW8-noyz.jpg
+        // далее по вложенности определяем свойство - первая папка - тип, далее идёт коллекция, потом топик и так далее
+
+        const type = relativePathSplit[0];
+        const collection = relativePathSplit[1];
+        const topic = relativePathSplit[2];
+        const orientation = relativePathSplit[3];
+        const width = relativePathSplit[4];
+
+        const date = new Date().toISOString();
+        // YYYY-MM-DD HH:mm:ss
+        const timestamp = date.split('.')[0];
+
+        const id = `${item}___${timestamp}`;
+
+        const newItem = {
+          id,
+          type,
+          collection,
+          topic,
+          orientation,
+          width: Number(width),
+          filename: item,
+          path: safetyFullPath,
+          size,
+        };
+
+        result.push(newItem);
       }
-
-      const { size } = fs.statSync(fullPath);
-
-      result[item] = {
-        path: strResult.substring(1),
-        size,
-      };
     }
   }
+
+  await getItemsRecursively(dirPath);
 
   return result;
 }
 
-const dirTree = readDirectory(dirReadyPath);
-const result = JSON.stringify(dirTree, null, 2);
+async function generateJsonForImages() {
+  const items = await getItems(sourcePath);
 
-const jsonPath = path.join(publicPath, './img_bg.json');
+  const chunks = [];
+  let chunk = [];
 
-fs.writeFileSync(jsonPath, result);
+  items.forEach((itemCur) => {
+    if (chunk.length <= 100) {
+      chunk.push(itemCur);
+    } else {
+      chunks.push(chunk);
 
-console.log('done');
+      chunk = [itemCur];
+    }
+  });
+
+  chunks.push(chunk);
+
+  await fs.rm(targetPath, { recursive: true, force: true });
+  await fs.mkdir(targetPath, { recursive: true });
+
+  for (const chunkCur of chunks) {
+    const index = chunks.indexOf(chunkCur);
+    const resultJson = JSON.stringify(chunkCur, null, 2);
+
+    const jsonPath = path.join(targetPath, `./chunk-${index}.json`);
+
+    await fs.writeFile(jsonPath, resultJson);
+  }
+
+  console.log('done');
+}
+
+generateJsonForImages();

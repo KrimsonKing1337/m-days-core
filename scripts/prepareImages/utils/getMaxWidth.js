@@ -2,7 +2,7 @@
  * @param width {number || string}
  */
 function getMaxWidth(width) {
-    if (typeof width === 'string') width = parseInt(width);
+    if (typeof width === 'string') width = Number(width);
 
     if (width >= 128 && width < 240) return 128;
     if (width >= 240 && width < 360) return 240;

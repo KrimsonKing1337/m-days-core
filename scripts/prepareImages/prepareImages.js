@@ -179,7 +179,7 @@ class PrepareImages {
 
     return {
       ...img,
-      variant: 'sq',
+      variant: 's',
       size: newSize,
       fullPath: newFullName,
     };

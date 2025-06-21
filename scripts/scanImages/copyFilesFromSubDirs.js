@@ -1,8 +1,8 @@
 const path = require('path');
 const fs = require('fs');
 
-const dirTarget = 'D:\\Images\\classical-art';
-const dirDest = 'D:\\Images\\classical-art_ready';
+const targetPath = 'D:\\Images\\classical-art';
+const sourcePath = 'D:\\Images\\classical-art_ready';
 
 const amount = 10;
 
@@ -11,12 +11,12 @@ function randomIntFromInterval(min, max) {
 }
 
 async function copyFilesFromSubDirs() {
-  const subDirs = fs.readdirSync(dirTarget);
+  const subDirs = fs.readdirSync(targetPath);
 
   const result = [];
 
   subDirs.forEach((subDirCur) => {
-    const subDirPath = path.join(dirTarget, subDirCur);
+    const subDirPath = path.join(targetPath, subDirCur);
     const subDirFiles = fs.readdirSync(subDirPath);
 
     const arr = [];
@@ -40,7 +40,7 @@ async function copyFilesFromSubDirs() {
   result.forEach((filePathCur) => {
     const base = path.parse(filePathCur).base;
 
-    fs.cpSync(filePathCur, path.join(dirDest, base));
+    fs.cpSync(filePathCur, path.join(sourcePath, base));
   });
 }
 

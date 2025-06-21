@@ -10,9 +10,9 @@ const { getFileInfo } = require('./getFileInfo.js');
  * @param formats {string[]}
  */
 function readDirR({ path, formats = [] }) {
-  const allFiles = [];
+  const result = [];
 
-  function R(path) {
+  const recursive = (path) => {
     const files = fs.readdirSync(path);
 
     files.forEach((fileCur) => {
@@ -23,7 +23,7 @@ function readDirR({ path, formats = [] }) {
         const fileInfo = getFileInfo(fileCurFullPath);
 
         if (formats.length === 0) {
-          allFiles.push(fileInfo);
+          result.push(fileInfo);
 
           return;
         }
@@ -33,19 +33,19 @@ function readDirR({ path, formats = [] }) {
         });
 
         if (formatIsOk === true) {
-          allFiles.push(fileInfo);
+          result.push(fileInfo);
         } else {
           console.log(`${fileCurFullPath} has wrong format, skip;`);
         }
       } else if (stats.isDirectory()) {
-        R(fileCurFullPath);
+        recursive(fileCurFullPath);
       }
     });
-  }
+  };
 
-  R(path);
+  recursive(path);
 
-  return allFiles;
+  return result;
 }
 
 module.exports = { readDirR };
