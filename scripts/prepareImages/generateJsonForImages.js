@@ -40,13 +40,33 @@ async function getItems(dirPath) {
         const relativePathSplit = relativePath.split('/');
 
         // например: static/anime/attack-on-titan/h/1920/-_RW8-noyz.jpg
-        // далее по вложенности определяем свойство - первая папка - тип, далее идёт коллекция, потом топик и так далее
+        // далее по вложенности определяем: первая папка - тип, далее идёт коллекция, потом топик и так далее
 
         const type = relativePathSplit[0];
         const collection = relativePathSplit[1];
         const topic = relativePathSplit[2];
         const orientation = relativePathSplit[3];
         const width = relativePathSplit[4];
+
+        const topicPath = path.join(sourcePath, type, collection, topic);
+
+        // информацию о файле берём из topicPath/info.json.
+        // если такого файла нет - ошибка и выход из приложения
+        const info = await fs.readFile(`${topicPath}/info.json`).catch((err) => {
+          console.error(err);
+
+          process.exit(1);
+        });
+
+        const infoJson = JSON.parse(info.toString());
+
+        if (!(infoJson.type && infoJson.collection && infoJson.topic && infoJson.tags)) {
+          const err = new Error(`info.json is not valid. File: ${topic}/info.json`);
+
+          console.error(err);
+
+          process.exit(1);
+        }
 
         const date = new Date().toISOString();
         // YYYY-MM-DD HH:mm:ss
@@ -56,9 +76,10 @@ async function getItems(dirPath) {
 
         const newItem = {
           id,
-          type,
-          collection,
-          topic,
+          type: infoJson.type,
+          collection: infoJson.collection,
+          topic: infoJson.topic,
+          tags: infoJson.tags,
           orientation,
           width: Number(width),
           filename: item,
