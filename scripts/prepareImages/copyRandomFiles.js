@@ -7,6 +7,7 @@ const { makeDir, removeDir } = require('./utils');
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
+
     [array[i], array[j]] = [array[j], array[i]];
   }
 }
@@ -20,7 +21,7 @@ async function randomFiles(amount = 100) {
   removeDir(randomImagesTargetPath);
   makeDir(randomImagesTargetPath);
 
-  const obj = {};
+  const counter = {};
 
   const readDirResult = readDirR({
     path: randomImagesSourcesPath,
@@ -36,21 +37,21 @@ async function randomFiles(amount = 100) {
 
     const imgCurTargetDir = `${randomImagesTargetPath}/${targetSubFolder}`;
 
-    if (!obj[targetSubFolder]) {
-      obj[targetSubFolder] = 0;
+    if (!counter[targetSubFolder]) {
+      counter[targetSubFolder] = 0;
     } else {
       const files = await fs.readdir(img.fullPathWithoutName);
 
-      if (files < amount && files.length === obj[targetSubFolder]) {
+      if (files.length < amount && files.length === counter[targetSubFolder]) {
         continue;
       }
 
-      if (obj[targetSubFolder] === amount) {
+      if (counter[targetSubFolder] === amount) {
         continue;
       }
     }
 
-    const newFullName = `${imgCurTargetDir}/${img.nameWithoutExt}.${img.ext}`;
+    const newFullName = `${imgCurTargetDir}/${img.name}`;
 
     makeDir(imgCurTargetDir);
 
@@ -58,7 +59,7 @@ async function randomFiles(amount = 100) {
 
     console.log(`${img.name} copied to ${newFullName};`);
 
-    obj[targetSubFolder] += 1;
+    counter[targetSubFolder] += 1;
   }
 
   console.log('done');

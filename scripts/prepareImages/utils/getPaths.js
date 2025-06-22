@@ -1,7 +1,7 @@
 const path = require('path');
 
-const sourceImagesPath = 'D:\\Projects\\m-days\\01. digital\\m-days-public-images_originals';
-const destinationImagesPath = 'D:\\Projects\\m-days\\01. digital\\m-days-public-images';
+const sourceImagesPath = 'D:\\Projects\\m-days\\01. digital\\m-days-public-images_originals\\test';
+const destinationImagesPath = 'D:\\Projects\\m-days\\01. digital\\m-days-public-images\\test';
 
 const imagesSourcesPath = path.join(sourceImagesPath, './_ready_random/static');
 const imagesTargetPath = path.join(destinationImagesPath, './_ready/static');

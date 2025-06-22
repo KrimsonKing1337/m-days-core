@@ -1,4 +1,4 @@
-const fs = require('fs').promises;
+const fs = require('fs/promises');
 const path = require('path');
 
 const { sep } = path;
@@ -9,6 +9,50 @@ const targetPath = './test';
 const sourcePath = 'D:/Projects/m-days/01. digital/m-days-public-images/test';
 
 // const dirReadyPath = path.join(publicImagesPath, './_ready');
+
+/**
+ * Поднимается вверх от начального пути и ищет указанный файл
+ * @param {string} startPath - путь к файлу или папке, откуда начать поиск
+ * @param {string} targetFileName - имя искомого файла (например, ".gitignore")
+ * @returns {Promise<string|null>} - полный путь до найденного файла или null
+ */
+async function findFileUpward(startPath, targetFileName) {
+  let currentDir = path.resolve(startPath);
+
+  // Если путь к файлу, а не папке — поднимемся к родителю
+  const stats = await fs.stat(currentDir);
+
+  if (!stats.isDirectory()) {
+    currentDir = path.dirname(currentDir);
+  }
+
+  while (true) {
+    const candidate = path.join(currentDir, targetFileName);
+
+    try {
+      // найден файл, возвращаем директорию, где он находится
+      await fs.access(candidate);
+
+      if (sep === '\\') {
+        return currentDir.replace(/\\/g, '/');
+      }
+
+      return currentDir;
+    } catch {
+      const parentDir = path.dirname(currentDir);
+
+      // достигли корня
+      if (parentDir === currentDir) {
+        break;
+      }
+
+      currentDir = parentDir;
+    }
+  }
+
+  return null; // файл не найден
+}
+
 
 /**
  *
@@ -34,25 +78,30 @@ async function getItems(dirPath) {
           safetyFullPath = safetyFullPath.replace(/\\/g, '/');
         }
 
-        const { size } = await fs.stat(fullPath);
+        const name = path.basename(safetyFullPath);
 
-        const relativePath = safetyFullPath.replace(`${sourcePath}/`, '');
-        const relativePathSplit = relativePath.split('/');
+        if (name === 'info.json') {
+          continue;
+        }
+
+        const { size } = stats;
+
+        const rootPath = await findFileUpward(safetyFullPath, 'info.json');
+        const pathToMedia = path.posix.join(rootPath, 'media');
+
+        const pathToFileRelativeToMedia = safetyFullPath.replace(pathToMedia, '').substring(1);
+        const pathToFileRelativeToMediaSplit = pathToFileRelativeToMedia.split('/'); // без первого слэша
 
         // например: static/anime/attack-on-titan/h/1920/-_RW8-noyz.jpg
+        // например: static/anime/hayao-miyazaki/gake-no-ue-no-ponyo/h/1920/-_RW8-noyz.jpg
         // далее по вложенности определяем: первая папка - тип, далее идёт коллекция, потом топик и так далее
 
-        const type = relativePathSplit[0];
-        const collection = relativePathSplit[1];
-        const topic = relativePathSplit[2];
-        const orientation = relativePathSplit[3];
-        const width = relativePathSplit[4];
+        const orientation = pathToFileRelativeToMediaSplit[0];
+        const width = pathToFileRelativeToMediaSplit[1];
 
-        const topicPath = path.join(sourcePath, type, collection, topic);
-
-        // информацию о файле берём из topicPath/info.json.
+        // информацию о файле берём из info.json.
         // если такого файла нет - ошибка и выход из приложения
-        const info = await fs.readFile(`${topicPath}/info.json`).catch((err) => {
+        const info = await fs.readFile(`${rootPath}/info.json`).catch((err) => {
           console.error(err);
 
           process.exit(1);
@@ -61,7 +110,7 @@ async function getItems(dirPath) {
         const infoJson = JSON.parse(info.toString());
 
         if (!(infoJson.type && infoJson.collection && infoJson.topic && infoJson.tags)) {
-          const err = new Error(`info.json is not valid. File: ${topic}/info.json`);
+          const err = new Error(`info.json is not valid. File: ${rootPath}/info.json`);
 
           console.error(err);
 

@@ -34,7 +34,7 @@ class PrepareImages {
   getImages() {
     return readDirR({
       path: this.imagesSourcesPath,
-      formats: this.allowFormats
+      formats: this.allowFormats,
     });
   }
 
@@ -279,8 +279,6 @@ class PrepareImages {
     console.log('done');
   }
 }
-
-
 
 const prepareImages = new PrepareImages({
   imagesSourcesPath: paths.imagesSourcesPath,
