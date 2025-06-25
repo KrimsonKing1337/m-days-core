@@ -99,22 +99,39 @@ async function getItems(dirPath) {
         const orientation = pathToFileRelativeToMediaSplit[0];
         const width = pathToFileRelativeToMediaSplit[1];
 
+        const infoJsonPath = `${rootPath}/info.json`;
+
+        let skipping = false;
+
         // информацию о файле берём из info.json.
-        // если такого файла нет - ошибка и выход из приложения
-        const info = await fs.readFile(`${rootPath}/info.json`).catch((err) => {
+        // если такого файла нет, в нём есть настройка ignore или файл невалиден - пропускаем эту папку
+
+        const info = await fs.readFile(infoJsonPath).catch((err) => {
+          console.error('info.json can\'t be opened, skipping...');
           console.error(err);
 
-          process.exit(1);
+          skipping = true;
         });
 
         const infoJson = JSON.parse(info.toString());
 
+        if (infoJson.ignore) {
+          console.log(`file: ${infoJsonPath} has ignore option, skipping...`);
+
+          skipping = true;
+        }
+
         if (!(infoJson.type && infoJson.collection && infoJson.topic && infoJson.tags)) {
-          const err = new Error(`info.json is not valid. File: ${rootPath}/info.json`);
+          const err = new Error(`info.json is not valid. File: ${infoJsonPath}`);
 
           console.error(err);
+          console.log('skipping...');
 
-          process.exit(1);
+          skipping = true;
+        }
+
+        if (skipping) {
+          continue;
         }
 
         const date = new Date().toISOString();
@@ -139,7 +156,7 @@ async function getItems(dirPath) {
         result.push(newItem);
       }
     }
-  }
+  };
 
   await getItemsRecursively(dirPath);
 
