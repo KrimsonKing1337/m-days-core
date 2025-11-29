@@ -21,23 +21,23 @@ async function randomFiles(amount = 100) {
   const counter: Record<string, number> = {};
 
   const readDirResult = readDirR({
-    path: randomImagesSourcesPath,
+    path: randomImagesSourcesPath, // media files and info.jsons as well
   });
 
   shuffleArray(readDirResult);
 
   for (let i = 0; i < readDirResult.length; i++) {
-    const img = readDirResult[i];
+    const fileCur = readDirResult[i];
 
     const indexStart = randomImagesSourcesPath.length;
-    const targetSubFolder = img.fullPathWithoutName.substring(indexStart);
+    const targetSubFolder = fileCur.fullPathWithoutName.substring(indexStart);
 
     const imgCurTargetDir = `${randomImagesTargetPath}/${targetSubFolder}`;
 
     if (!counter[targetSubFolder]) {
       counter[targetSubFolder] = 0;
     } else {
-      const files = await fs.readdir(img.fullPathWithoutName);
+      const files = await fs.readdir(fileCur.fullPathWithoutName);
 
       if (files.length < amount && files.length === counter[targetSubFolder]) {
         continue;
@@ -48,13 +48,13 @@ async function randomFiles(amount = 100) {
       }
     }
 
-    const newFullName = `${imgCurTargetDir}/${img.name}`;
+    const newFullName = `${imgCurTargetDir}/${fileCur.name}`;
 
     makeDir(imgCurTargetDir);
 
-    await fs.cp(img.fullPath, newFullName);
+    await fs.cp(fileCur.fullPath, newFullName);
 
-    console.log(`${img.name} copied to ${newFullName};`);
+    console.log(`${fileCur.name} copied to ${newFullName};`);
 
     counter[targetSubFolder] += 1;
   }
