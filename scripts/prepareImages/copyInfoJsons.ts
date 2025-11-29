@@ -6,9 +6,6 @@ import { getPaths } from './utils';
 
 const paths = getPaths();
 
-/**
- * Рекурсивно ищет папку по имени
- */
 async function findFolderRecursive(startPath: string, folderName: string): Promise<string|null> {
   const entries = await fs.readdir(startPath, { withFileTypes: true });
 
