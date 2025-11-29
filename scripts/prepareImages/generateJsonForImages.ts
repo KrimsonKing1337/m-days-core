@@ -143,6 +143,11 @@ async function getItems(dirPath: string) {
 
         const id = `${item}___${timestamp}`;
 
+        // возвращаем относительный путь от последней папки в sourcePath
+        const basepath = path.basename(sourcePath);
+        const index = safetyFullPath.indexOf(basepath);
+        const substr = safetyFullPath.slice(index);
+
         const newItem = {
           id,
           type: infoJson.type,
@@ -152,7 +157,7 @@ async function getItems(dirPath: string) {
           orientation,
           width: Number(width),
           filename: item,
-          path: safetyFullPath,
+          path: substr,
           size,
         };
 
