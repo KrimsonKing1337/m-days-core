@@ -16,6 +16,7 @@
     "prepare-images": "tsx ./scripts/prepareImages/prepareImages.js",
     "prepare-gifs": "tsx ./scripts/prepareImages/prepareGifs.js",
     "generate-json": "tsx ./scripts/prepareImages/generateJsonForImages.js",
+    "update-db": "tsx ./scripts/database/updateRecords.ts && tsx ./scripts/database/updatePresets.ts",
     "prepare-all": "npm run copy-random && npm run prepare-images && npm run prepare-gifs && npm run generate-json",
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "node ./scripts/postinstall.js",
