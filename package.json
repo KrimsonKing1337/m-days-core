@@ -12,10 +12,10 @@
     "packaging": "node ./scripts/tgzPrepare.js && npm pack --pack-destination ./tgz",
     "up": "npm version patch --git-tag-version false --commit-hooks false",
     "scss": "node-sass ./src --output ./src",
-    "copy-random": "node ./scripts/prepareImages/copyRandomFiles.js",
-    "prepare-images": "node ./scripts/prepareImages/prepareImages.js",
-    "prepare-gifs": "node ./scripts/prepareImages/prepareGifs.js",
-    "generate-json": "node ./scripts/prepareImages/generateJsonForImages.js",
+    "copy-random": "npm run tsx ./scripts/prepareImages/copyRandomFiles.js",
+    "prepare-images": "npm run tsx ./scripts/prepareImages/prepareImages.js",
+    "prepare-gifs": "npm run tsx ./scripts/prepareImages/prepareGifs.js",
+    "generate-json": "npm run tsx ./scripts/prepareImages/generateJsonForImages.js",
     "prepare-all": "npm run copy-random && npm run prepare-images && npm run prepare-gifs && npm run generate-json",
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "node ./scripts/postinstall.js",
@@ -63,6 +63,7 @@
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7",
     "tsc-alias": "^1.8.7",
+    "tsx": "^4.20.6",
     "typescript": "^5.2.2"
   },
   "repository": {

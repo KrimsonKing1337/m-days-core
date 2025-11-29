@@ -4,7 +4,7 @@ import { readDirR } from './utils';
 import { getPaths } from './utils';
 import { makeDir, removeDir } from './utils';
 
-function shuffleArray(array) {
+function shuffleArray(array: unknown[]) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
 
@@ -12,16 +12,13 @@ function shuffleArray(array) {
   }
 }
 
-/**
- * @param amount {number}
-**/
 async function randomFiles(amount = 100) {
   const { randomImagesSourcesPath, randomImagesTargetPath } = getPaths();
 
   removeDir(randomImagesTargetPath);
   makeDir(randomImagesTargetPath);
 
-  const counter = {};
+  const counter: Record<string, number> = {};
 
   const readDirResult = readDirR({
     path: randomImagesSourcesPath,

@@ -1,8 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-
-const _get = require('lodash/get.js');
-const _set = require('lodash/set.js');
+import _get from 'lodash/get.js';
+import _set from 'lodash/set.js';
 
 // R = Recursively
 
@@ -10,12 +9,12 @@ const _set = require('lodash/set.js');
  *
  * @param root {string}
  */
-function getFiles(root) {
+export function getFiles(root: string) {
   const allFiles = {};
 
   const rootFolder = root;
 
-  function R(dir) {
+  function R(dir: string) {
     const files = fs.readdirSync(dir);
 
     files.forEach((fileCur) => {
@@ -23,7 +22,8 @@ function getFiles(root) {
       const stats = fs.statSync(fileCurFullPath);
 
       const cutPath = fileCurFullPath.replace(`${rootFolder}/`, '');
-      const key = path.dirname(cutPath).replaceAll('/', '.');
+      const dirname = path.dirname(cutPath);
+      const key = dirname.replaceAll('/', '.');
 
       // const key = path.dirname(cutPath).split('/').join('.');
 
@@ -51,5 +51,3 @@ function getFiles(root) {
 
   return allFiles;
 }
-
-module.exports = { getFiles };

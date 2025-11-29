@@ -1,9 +1,9 @@
-/**
- *
- * @param width {number}
- * @param height {number}
- */
-export function getImageVariant({ width, height } = {}) {
+export type GetImageVariant = {
+  width: number;
+  height: number;
+};
+
+export function getImageVariant({ width, height }: GetImageVariant) {
   if (width > height) {
     if (width / height > 1 && width / height < 1.3333) {
       return 's';

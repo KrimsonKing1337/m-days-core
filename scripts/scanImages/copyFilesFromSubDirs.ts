@@ -6,14 +6,14 @@ const sourcePath = 'D:\\Images\\classical-art_ready';
 
 const amount = 10;
 
-function randomIntFromInterval(min, max) {
+function randomIntFromInterval(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 async function copyFilesFromSubDirs() {
   const subDirs = fs.readdirSync(targetPath);
 
-  const result = [];
+  const result: string[] = [];
 
   subDirs.forEach((subDirCur) => {
     const subDirPath = path.join(targetPath, subDirCur);

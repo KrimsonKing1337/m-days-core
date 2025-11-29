@@ -15,24 +15,6 @@ const randomImagesSourcesPath = sourceImagesPath;
 const randomImagesTargetPath = path.join(randomImagesSourcesPath, './_ready_random');
 const randomImagesTempPath = path.join(randomImagesSourcesPath, './_temp');
 
-/**
- *
- * @returns {
- *  {
- *    imagesSourcesPath: string,
- *    imagesTargetPath: string,
- *    imagesTempPath: string,
- *
- *    gifsSourcesPath: string,
- *    gifsTargetPath: string,
- *    gifsTempPath: string,
- *
- *    randomImagesSourcesPath: string,
- *    randomImagesTargetPath: string,
- *    randomImagesTempPath: string,
- *  }
- * }
- */
 export function getPaths() {
   return {
     imagesSourcesPath,

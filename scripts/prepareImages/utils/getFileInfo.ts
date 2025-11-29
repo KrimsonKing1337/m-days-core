@@ -1,10 +1,15 @@
 import path from 'path';
 
-/**
- *
- * @param pathFile {string}
- */
-export function getFileInfo(pathFile) {
+export type FileInfo = {
+  name: string;
+  ext: string;
+  nameWithoutExt: string;
+  fullPath: string;
+  fullPathWithoutName: string;
+  subFolder: string;
+};
+
+export function getFileInfo(pathFile: string): FileInfo {
   const name = path.basename(pathFile);
   const ext = path.extname(pathFile).toLowerCase();
   const dir = path.dirname(pathFile);

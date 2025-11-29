@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs';
 
-const { getFiles } = require('./getFiles.js');
+import { getFiles } from './getFiles.js';
 
 const publicDir = process.argv[2];
 

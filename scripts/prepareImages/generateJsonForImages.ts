@@ -10,13 +10,7 @@ const sourcePath = 'D:/Projects/m-days/01. digital/m-days-public-images/test';
 
 // const dirReadyPath = path.join(publicImagesPath, './_ready');
 
-/**
- * Поднимается вверх от начального пути и ищет указанный файл
- * @param {string} startPath - путь к файлу или папке, откуда начать поиск
- * @param {string} targetFileName - имя искомого файла (например, ".gitignore")
- * @returns {Promise<string|null>} - полный путь до найденного файла или null
- */
-async function findFileUpward(startPath, targetFileName) {
+async function findFileUpward(startPath: string, targetFileName: string) {
   let currentDir = path.resolve(startPath);
 
   // Если путь к файлу, а не папке — поднимемся к родителю
@@ -26,6 +20,7 @@ async function findFileUpward(startPath, targetFileName) {
     currentDir = path.dirname(currentDir);
   }
 
+  // eslint-disable-next-line no-constant-condition
   while (true) {
     const candidate = path.join(currentDir, targetFileName);
 
@@ -53,15 +48,23 @@ async function findFileUpward(startPath, targetFileName) {
   return null; // файл не найден
 }
 
+type Item = {
+  id: string;
+  type: string;
+  collection: string;
+  topic: string;
+  tags: string[];
+  orientation: string;
+  width: number;
+  filename: string;
+  path: string;
+  size: number;
+}
 
-/**
- *
- * @param dirPath string
- */
-async function getItems(dirPath) {
-  const result = [];
+async function getItems(dirPath: string) {
+  const result: Item[] = [];
 
-  const getItemsRecursively = async (dirPathRecursive) => {
+  const getItemsRecursively = async (dirPathRecursive: string) => {
     const items = await fs.readdir(dirPathRecursive);
 
     for (const item of items) {
@@ -86,7 +89,7 @@ async function getItems(dirPath) {
 
         const { size } = stats;
 
-        const rootPath = await findFileUpward(safetyFullPath, 'info.json');
+        const rootPath = await findFileUpward(safetyFullPath, 'info.json') as string;
         const pathToMedia = path.posix.join(rootPath, 'media');
 
         const pathToFileRelativeToMedia = safetyFullPath.replace(pathToMedia, '').substring(1);
@@ -113,7 +116,7 @@ async function getItems(dirPath) {
           skipping = true;
         });
 
-        const infoJson = JSON.parse(info.toString());
+        const infoJson = JSON.parse((info as Buffer).toString());
 
         if (infoJson.ignore) {
           console.log(`file: ${infoJsonPath} has ignore option, skipping...`);
@@ -166,8 +169,8 @@ async function getItems(dirPath) {
 async function generateJsonForImages() {
   const items = await getItems(sourcePath);
 
-  const chunks = [];
-  let chunk = [];
+  const chunks: Item[][] = [];
+  let chunk: Item[] = [];
 
   items.forEach((itemCur) => {
     if (chunk.length <= 100) {

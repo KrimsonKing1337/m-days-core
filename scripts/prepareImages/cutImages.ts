@@ -1,7 +1,7 @@
 import path from 'path';
 import sharp from 'sharp';
 
-import { readDirR, removeDir, makeDir } from './utils';
+import { makeDir, readDirR, removeDir } from './utils';
 
 const imagesSourcesPath = 'C:\\Users\\K\\Downloads\\pics-test\\dynamic';
 const imagesTargetPath = path.join(imagesSourcesPath, './_ready_cut');
@@ -30,9 +30,10 @@ export async function cutImages() {
 
     const newFullName = `${imgCurTargetDir}/${imageCur.name}`;
 
-    const { width, height } = meta;
+    const metaWidth = meta.width as number;
+    const metaHeight = meta.height as number;
 
-    if (width < requiredWidth || height < requiredHeight) {
+    if (metaWidth < requiredWidth || metaHeight < requiredHeight) {
       continue;
     }
 

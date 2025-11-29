@@ -1,10 +1,6 @@
 import fs from 'fs';
 
-/**
- *
- * @param path {string}
- */
-export function makeDir(path) {
+export function makeDir(path: string) {
   if (!fs.existsSync(path)) {
     fs.mkdirSync(path, { recursive: true });
   }

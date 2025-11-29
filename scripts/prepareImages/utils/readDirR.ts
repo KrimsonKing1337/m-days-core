@@ -1,18 +1,18 @@
 import fs from 'fs';
 
-import { getFileInfo } from './getFileInfo.js';
+import { getFileInfo, type FileInfo } from './getFileInfo.js';
 
 // R = Recursively
 
-/**
- *
- * @param path {string}
- * @param formats {string[]}
- */
-function readDirR({ path, formats = [] }) {
-  const result = [];
+export type ReadDirR = {
+  path: string;
+  formats?: string[];
+};
 
-  const recursive = (path) => {
+export function readDirR({ path, formats = [] }: ReadDirR) {
+  const result: FileInfo[] = [];
+
+  const recursive = (path: string) => {
     const files = fs.readdirSync(path);
 
     files.forEach((fileCur) => {
@@ -28,7 +28,7 @@ function readDirR({ path, formats = [] }) {
           return;
         }
 
-        const formatIsOk = formats.some((formatCur) => {
+        const formatIsOk = formats.some((formatCur: string) => {
           return formatCur.toLowerCase() === fileInfo.ext.toLowerCase();
         });
 
@@ -47,5 +47,3 @@ function readDirR({ path, formats = [] }) {
 
   return result;
 }
-
-module.exports = { readDirR };

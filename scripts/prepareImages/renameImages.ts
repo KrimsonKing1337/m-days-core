@@ -2,9 +2,9 @@ import fs from 'fs';
 import { rename } from 'fs/promises';
 import path from 'path';
 
-import { getRandomString } from './utils/getRandomString.js';
+import { getRandomString } from './utils';
 
-function* readAllFiles(dir) {
+function* readAllFiles(dir: string): IterableIterator<string> {
   const files = fs.readdirSync(dir, { withFileTypes: true });
 
   for (const file of files) {

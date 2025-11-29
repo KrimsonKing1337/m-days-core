@@ -8,11 +8,8 @@ const paths = getPaths();
 
 /**
  * Рекурсивно ищет папку по имени
- * @param {string} startPath - путь, с которого начинать поиск
- * @param {string} folderName - имя искомой папки
- * @returns {Promise<string|null>} - полный путь до найденной папки или null
  */
-async function findFolderRecursive(startPath, folderName) {
+async function findFolderRecursive(startPath: string, folderName: string): Promise<string|null> {
   const entries = await fs.readdir(startPath, { withFileTypes: true });
 
   for (const entry of entries) {
@@ -48,7 +45,7 @@ async function copyInfoJsons() {
     const { subFolder, fullPath, name } = fileCur;
 
     const subFolderTarget = await findFolderRecursive(imagesTargetPath, subFolder);
-    const jsonFilePath = path.join(subFolderTarget, name);
+    const jsonFilePath = path.join(subFolderTarget as string, name);
 
     await fs.cp(fullPath, jsonFilePath);
   }

@@ -1,24 +1,53 @@
 import sharp from 'sharp';
 
+import type { FileInfo } from './utils/getFileInfo';
 import { getPaths } from './utils';
 import { getMaxWidth } from './utils';
 import { getRandomString } from './utils';
-
 import { readDirR } from './utils';
 import { makeDir } from './utils';
 import { removeDir } from './utils';
-import { getImageVariant } from './utils/index.js';
+import { getImageVariant } from './utils';
 
 const paths = getPaths();
 
+type PrepareImagesArgs = {
+  imagesSourcesPath: string;
+  imagesTargetPath: string;
+  imagesTempPath: string;
+};
+
+type FormattedImage = FileInfo & {
+  size: {
+    width: number;
+    height: number;
+  }
+};
+
+type Target = {
+  img: FormattedImage;
+  sizes: number[];
+  tooSmall?: boolean;
+  invalidRatio?: boolean;
+  variant: string;
+};
+
+type TargetForConvert = {
+  img: FormattedImage;
+  variant: string;
+  size: number;
+  newName: string;
+  newFullName: string;
+};
+
 class PrepareImages {
-  /**
-   *
-   * @param imagesSourcesPath {string}
-   * @param imagesTargetPath {string}
-   * @param imagesTempPath {string}
-   */
-  constructor({ imagesSourcesPath, imagesTargetPath, imagesTempPath } = {}) {
+  private readonly imagesSourcesPath: string;
+  private readonly imagesTargetPath: string;
+  private readonly tempPath: string;
+  private readonly allowSizes: number[];
+  private readonly allowFormats: string[];
+
+  constructor({ imagesSourcesPath, imagesTargetPath, imagesTempPath }: PrepareImagesArgs) {
     this.imagesSourcesPath = imagesSourcesPath;
     this.imagesTargetPath = imagesTargetPath;
     this.tempPath = imagesTempPath;
@@ -27,10 +56,6 @@ class PrepareImages {
     this.allowFormats = ['bmp', 'jng', 'jp2', 'jpc', 'jpeg', 'jpg', 'png', 'ptif', 'tiff', 'webp'];
   }
 
-  /**
-   * @private
-   * @returns {Array}
-   */
   getImages() {
     return readDirR({
       path: this.imagesSourcesPath,
@@ -38,15 +63,9 @@ class PrepareImages {
     });
   }
 
-  /**
-   * @private
-   * @param img {object}
-   * @property img.fullPath {string}
-   * @returns {object || null}
-   */
-  async formatTarget(img) {
-    let formattedImg = img;
-    const sizes = [];
+  async formatTarget(img: FileInfo) {
+    let formattedImg = img as FormattedImage;
+    const sizes: number[] = [];
 
     let meta;
 
@@ -58,18 +77,19 @@ class PrepareImages {
       return;
     }
 
-    const { width, height } = meta;
+    const metaHeight = meta.height as number;
+    const metaWidth = meta.width as number;
 
-    const variant = getImageVariant({width, height});
+    const variant = getImageVariant({ width: metaWidth, height: metaHeight });
 
     formattedImg.size = {
-      width,
-      height,
+      width: metaWidth,
+      height: metaHeight,
     };
 
     // если ширина меньше 128 - то копируем без изменений
-    if (width < 128) {
-      sizes.push(width);
+    if (metaWidth < 128) {
+      sizes.push(metaWidth);
 
       return {
         img: formattedImg,
@@ -79,19 +99,19 @@ class PrepareImages {
       };
     }
 
-    const delta = (width / height);
+    const delta = (metaWidth / metaHeight);
 
     if (delta < 1 || delta > 2) {
       const squareImg = await this.makeItSquare(formattedImg);
 
       if (squareImg !== false) {
-        formattedImg = squareImg;
+        formattedImg = squareImg as FormattedImage;
 
         console.log(`${img.fullPath} was cropped to square;`);
       } else {
         console.log(`${img.fullPath} is not valid due ratio;`);
 
-        sizes.push(width);
+        sizes.push(metaWidth);
 
         return {
           img: formattedImg,
@@ -101,7 +121,7 @@ class PrepareImages {
       }
     }
 
-    const maxWidth = getMaxWidth(width);
+    const maxWidth = getMaxWidth(metaWidth) as number;
 
     this.allowSizes.forEach((widthCur) => {
       if (maxWidth >= widthCur) {
@@ -116,12 +136,7 @@ class PrepareImages {
     };
   }
 
-  /**
-   * @private
-   * @param images[] {object}; collection of images
-   * @returns {Promise<object[]>};
-   */
-  async formatEachTarget(images) {
+  async formatEachTarget(images: FileInfo[]) {
     const targets = [];
 
     for (const imgCur of images) {
@@ -137,20 +152,13 @@ class PrepareImages {
    * @private
    * @param targets[] {object}; collection of targets
    */
-  async convertEachTarget(targets) {
+  async convertEachTarget(targets: Target[]) {
     for (const targetCur of targets) {
       await this.convertTargetEachSize(targetCur);
     }
   }
 
-  /**
-   * @property img {object}
-   * @property img.fullPath {string}
-   * @property img.nameWithoutExt {string}
-   * @property img.size {object}
-   * @returns {string || false}
-   */
-  async makeItSquare(img) {
+  async makeItSquare(img: FormattedImage) {
     const { size } = img;
 
     const cropVal = size.height < size.width ? size.height : size.width;
@@ -185,14 +193,7 @@ class PrepareImages {
     };
   }
 
-  /**
-   * @param target {object}
-   * @property target.img {object}
-   * @property target.sizes {string[]}
-   * @property target.invalidRatio {boolean}
-   * @property target.variant {string}
-   */
-  async convertTargetEachSize({ img, sizes, invalidRatio, variant } = {}) {
+  async convertTargetEachSize({ img, sizes, invalidRatio, variant }: Target) {
     if (!img || !sizes) {
       return;
     }
@@ -227,27 +228,17 @@ class PrepareImages {
     }
   }
 
-  /**
-   * @param img {object}
-   * @property img.fullPath {string}
-   * @property img.name {string}
-   * @property img.ext {string}
-   * @param size {string}
-   * @param variant {string}
-   * @param newName {string}
-   * @param newFullName {string}
-   */
-  async convert({ img, size, variant, newFullName } = {}) {
+  async convert({ img, size, variant, newFullName }: TargetForConvert) {
     const sizeAsNumber = Number(size);
 
-    let options = {
+    let options: sharp.ResizeOptions = {
       width: sizeAsNumber,
-    }
+    };
 
     if (variant === 'v') {
       options = {
         height: sizeAsNumber,
-      }
+      };
     }
 
     try {
@@ -272,7 +263,7 @@ class PrepareImages {
 
     const targets = await this.formatEachTarget(images);
 
-    await this.convertEachTarget(targets);
+    await this.convertEachTarget(targets as Target[]);
 
     removeDir(this.tempPath);
 

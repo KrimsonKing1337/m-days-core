@@ -1,9 +1,5 @@
 import fs from 'fs';
 
-/**
- *
- * @param dirPath {string}
- */
-export function removeDir(dirPath) {
+export function removeDir(dirPath: string) {
   fs.rmSync(dirPath, { recursive: true, force: true });
 }
