@@ -3,13 +3,28 @@
     "id": "gordey",
     "values": {
       "dynamic": [
-        "retrowave/common",
-        "synthwave/common",
-        "vaporwave/common"
+        {
+          "collection": "retrowave",
+          "topic": "common"
+        },
+        {
+          "collection": "synthwave",
+          "topic": "common"
+        },
+        {
+          "collection": "vaporwave",
+          "topic": "common"
+        }
       ],
       "static": [
-        "synthwave/common",
-        "vaporwave/common"
+        {
+          "collection": "synthwave",
+          "topic": "common"
+        },
+        {
+          "collection": "vaporwave",
+          "topic": "common"
+        }
       ]
     }
   },
@@ -18,17 +33,50 @@
     "values": {
       "dynamic": [],
       "static": [
-        "anime/attack-on-titan",
-        "anime/fullmetal-alchemist",
-        "anime/fullmetal-alchemist-brotherhood",
-        "anime/ghost-in-the-shell",
-        "anime/hellsing-ultimate",
-        "cartoons/avatar-the-last-airbender",
-        "cartoons/the-legend-of-korra",
-        "series/doctor-who",
-        "series/star-trek",
-        "series/the-10th-kingdom",
-        "series/too-old-to-die-young"
+        {
+          "collection": "anime",
+          "topic": "attack-on-titan"
+        },
+        {
+          "collection": "anime",
+          "topic": "fullmetal-alchemist"
+        },
+        {
+          "collection": "anime",
+          "topic": "fullmetal-alchemist-brotherhood"
+        },
+        {
+          "collection": "anime",
+          "topic": "ghost-in-the-shell"
+        },
+        {
+          "collection": "anime",
+          "topic": "hellsing-ultimate"
+        },
+        {
+          "collection": "cartoons",
+          "topic": "avatar-the-last-airbender"
+        },
+        {
+          "collection": "cartoons",
+          "topic": "the-legend-of-korra"
+        },
+        {
+          "collection": "series",
+          "topic": "doctor-who"
+        },
+        {
+          "collection": "series",
+          "topic": "star-trek"
+        },
+        {
+          "collection": "series",
+          "topic": "the-10th-kingdom"
+        },
+        {
+          "collection": "series",
+          "topic": "too-old-to-die-young"
+        }
       ]
     }
   },
@@ -37,13 +85,34 @@
     "values": {
       "dynamic": [],
       "static": [
-        "anime/attack-on-titan",
-        "anime/cowboy-bebop",
-        "games/ghost-of-tsushima",
-        "movies/dune-1",
-        "movies/dune-2",
-        "movies/v-for-vendetta",
-        "movies/watchmen"
+        {
+          "collection": "anime",
+          "topic": "attack-on-titan"
+        },
+        {
+          "collection": "anime",
+          "topic": "cowboy-bebop"
+        },
+        {
+          "collection": "games",
+          "topic": "ghost-of-tsushima"
+        },
+        {
+          "collection": "movies",
+          "topic": "dune-1"
+        },
+        {
+          "collection": "movies",
+          "topic": "dune-2"
+        },
+        {
+          "collection": "movies",
+          "topic": "v-for-vendetta"
+        },
+        {
+          "collection": "movies",
+          "topic": "movies/watchmen"
+        }
       ]
     }
   },
@@ -51,12 +120,30 @@
     "id": "timka_valya",
     "values": {
       "dynamic": [
-        "anime/common",
-        "cartoons/american-dad",
-        "cartoons/rick-and-morty",
-        "series/friends",
-        "series/how-i-met-your-mother",
-        "meme/common"
+        {
+          "collection": "anime",
+          "topic": "common"
+        },
+        {
+          "collection": "cartoons",
+          "topic": "american-dad"
+        },
+        {
+          "collection": "cartoons",
+          "topic": "rick-and-morty"
+        },
+        {
+          "collection": "series",
+          "topic": "friends"
+        },
+        {
+          "collection": "series",
+          "topic": "how-i-met-your-mother"
+        },
+        {
+          "collection": "meme",
+          "topic": "common"
+        }
       ],
       "static": []
     }
@@ -66,24 +153,78 @@
     "values": {
       "dynamic": [],
       "static": [
-        "movies/bridget-jones-diary",
-        "movies/dead-poets-society",
-        "movies/harry-potter",
-        "movies/la-la-land",
-        "movies/lord-of-the-ring",
-        "movies/love-actually",
-        "movies/pride-and-prejudice-95",
-        "movies/the-artist",
-        "cartoons/anastasia",
-        "cartoons/home",
-        "cartoons/inside-out",
-        "cartoons/tangled",
-        "cartoons/up",
-        "cartoons/wall-e",
-        "series/black-books",
-        "series/friends",
-        "series/how-i-met-your-mother",
-        "series/the-big-bang-theory"
+        {
+          "collection": "movies",
+          "topic": "bridget-jones-diary"
+        },
+        {
+          "collection": "movies",
+          "topic": "dead-poets-society"
+        },
+        {
+          "collection": "movies",
+          "topic": "harry-potter"
+        },
+        {
+          "collection": "movies",
+          "topic": "la-la-land"
+        },
+        {
+          "collection": "movies",
+          "topic": "lord-of-the-ring"
+        },
+        {
+          "collection": "movies",
+          "topic": "love-actually"
+        },
+        {
+          "collection": "movies",
+          "topic": "pride-and-prejudice-95"
+        },
+        {
+          "collection": "movies",
+          "topic": "the-artist"
+        },
+        {
+          "collection": "cartoons",
+          "topic": "anastasia"
+        },
+        {
+          "collection": "cartoons",
+          "topic": "home"
+        },
+        {
+          "collection": "cartoons",
+          "topic": "inside-out"
+        },
+        {
+          "collection": "cartoons",
+          "topic": "tangled"
+        },
+        {
+          "collection": "cartoons",
+          "topic": "up"
+        },
+        {
+          "collection": "cartoons",
+          "topic": "wall-e"
+        },
+        {
+          "collection": "series",
+          "topic": "black-books"
+        },
+        {
+          "collection": "series",
+          "topic": "friends"
+        },
+        {
+          "collection": "series",
+          "topic": "how-i-met-your-mother"
+        },
+        {
+          "collection": "series",
+          "topic": "the-big-bang-theory"
+        }
       ]
     }
   }
