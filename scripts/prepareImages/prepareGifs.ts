@@ -66,6 +66,13 @@ class PrepareImages {
     });
   }
 
+  getJsons() {
+    return readDirR({
+      path: this.imagesSourcesPath,
+      formats: ['json'],
+    });
+  }
+
   async formatTarget(img: FileInfo): Promise<TargetOrUndefined> {
     const formattedImg = img as FormattedImage;
     const sizes: number[] = [];
@@ -209,6 +216,22 @@ class PrepareImages {
     console.log(`${img.name} converted to ${newFullName};`);
   }
 
+  async copyJsons() {
+    const jsons = this.getJsons();
+
+    for (const jsonCur of jsons) {
+      const indexStart = paths.imagesSourcesPath.length;
+      const newSubFolder = jsonCur.fullPathWithoutName.substring(indexStart);
+
+      const jsonCurTargetDir = `${this.imagesTargetPath}/${newSubFolder}`;
+      const jsonCurTarget = `${jsonCurTargetDir}/${jsonCur.name}`;
+
+      await fs.cp(jsonCur.fullPath, jsonCurTarget);
+
+      console.log(`${jsonCur.name} copied to ${jsonCurTargetDir}`);
+    }
+  }
+
   async start() {
     removeDir(this.imagesTargetPath);
     makeDir(this.imagesTargetPath);
@@ -220,6 +243,8 @@ class PrepareImages {
     await this.convertEachTarget(targets as Target[]);
 
     removeDir(this.tempPath);
+
+    await this.copyJsons();
 
     console.log('done');
   }

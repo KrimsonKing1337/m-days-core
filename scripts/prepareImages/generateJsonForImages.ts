@@ -3,17 +3,13 @@ import path from 'path';
 
 const { sep } = path;
 
-// const publicPath = 'D:\\Projects\\m-days\\01. digital\\m-days-public';
-const targetPath = './test';
-// const publicImagesPath = 'D:\\Projects\\m-days\\01. digital\\m-days-public-images';
-const sourcePath = 'D:/Projects/m-days/01. digital/m-days-public-images/test';
-
-// const dirReadyPath = path.join(publicImagesPath, './_ready');
+const targetPath = 'D:/Projects/m-days/01. digital/m-days-public-images_test/_chunks';
+const sourcePath = 'D:/Projects/m-days/01. digital/m-days-public-images_test/_ready';
 
 async function findFileUpward(startPath: string, targetFileName: string) {
   let currentDir = path.resolve(startPath);
 
-  // Если путь к файлу, а не папке — поднимемся к родителю
+  // если путь к файлу, а не к папке - поднимаемся к родителю
   const stats = await fs.stat(currentDir);
 
   if (!stats.isDirectory()) {

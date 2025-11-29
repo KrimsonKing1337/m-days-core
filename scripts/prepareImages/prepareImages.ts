@@ -1,3 +1,4 @@
+import fs from 'fs/promises';
 import sharp from 'sharp';
 
 import type { FileInfo } from './utils/getFileInfo';
@@ -60,6 +61,13 @@ class PrepareImages {
     return readDirR({
       path: this.imagesSourcesPath,
       formats: this.allowFormats,
+    });
+  }
+
+  getJsons() {
+    return readDirR({
+      path: this.imagesSourcesPath,
+      formats: ['json'],
     });
   }
 
@@ -148,10 +156,6 @@ class PrepareImages {
     return targets.filter((targetCur) => targetCur !== null);
   }
 
-  /**
-   * @private
-   * @param targets[] {object}; collection of targets
-   */
   async convertEachTarget(targets: Target[]) {
     for (const targetCur of targets) {
       await this.convertTargetEachSize(targetCur);
@@ -255,6 +259,22 @@ class PrepareImages {
     console.log(`${img.name} converted to ${newFullName}`);
   }
 
+  async copyJsons() {
+    const jsons = this.getJsons();
+
+    for (const jsonCur of jsons) {
+      const indexStart = paths.imagesSourcesPath.length;
+      const newSubFolder = jsonCur.fullPathWithoutName.substring(indexStart);
+
+      const jsonCurTargetDir = `${this.imagesTargetPath}/${newSubFolder}`;
+      const jsonCurTarget = `${jsonCurTargetDir}/${jsonCur.name}`;
+
+      await fs.cp(jsonCur.fullPath, jsonCurTarget);
+
+      console.log(`${jsonCur.name} copied to ${jsonCurTargetDir}`);
+    }
+  }
+
   async start() {
     removeDir(this.imagesTargetPath);
     makeDir(this.imagesTargetPath);
@@ -266,6 +286,8 @@ class PrepareImages {
     await this.convertEachTarget(targets as Target[]);
 
     removeDir(this.tempPath);
+
+    await this.copyJsons();
 
     console.log('done');
   }
