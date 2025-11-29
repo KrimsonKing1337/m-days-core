@@ -1,4 +1,4 @@
-import { z } from 'zod/v4/index';
+import { z } from 'zod/v4';
 
 export const ImageSchema = z.object({
   id: z.string().nonempty(),

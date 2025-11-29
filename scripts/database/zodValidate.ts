@@ -1,4 +1,6 @@
-import { z, ZodError, ZodObject } from 'zod/v4/index';
+import { z, ZodError, ZodObject } from 'zod/v4';
+
+import { Image, Preset } from './@types';
 
 import { writeLog } from './logger';
 
@@ -9,36 +11,10 @@ type ValidateArgs = {
   withLog?: boolean;
 };
 
-const ImageSchema = z.object({
-  id: z.string().nonempty(),
-  type: z.enum(['dynamic', 'static']),
-  collection: z.string().nonempty(),
-  topic: z.string().nonempty(),
-  orientation: z.enum(['h', 'v', 's']),
-  width: z.number().positive(),
-  filename: z.string().nonempty(),
-  path: z.string().nonempty(),
-  size: z.number().positive(),
-});
-
-type Image = z.infer<typeof ImageSchema>;
-
 type ImageInvalidField = {
   item: Image,
   errors: ZodError,
 };
-
-const PresetValuesSchema = z.object({
-  dynamic: z.array(z.string()),
-  static: z.array(z.string()),
-});
-
-const PresetSchema = z.object({
-  id: z.string().nonempty(),
-  values: PresetValuesSchema,
-});
-
-type Preset = z.infer<typeof PresetSchema>;
 
 type PresetInvalidField = {
   item: Preset,
