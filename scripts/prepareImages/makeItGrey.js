@@ -1,6 +1,6 @@
-const sharp = require('sharp');
+import sharp from 'sharp';
 
-const { readDirR } = require('./utils');
+import { readDirR } from './utils';
 
 const dir = 'D:\\Projects\\m-days\\01. digital\\m-days-public-images_originals\\static\\default\\common\\0';
 

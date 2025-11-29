@@ -1,8 +1,7 @@
-const fs = require('fs').promises;
-const path = require('path');
-const sharp = require('sharp');
+import path from 'path';
+import sharp from 'sharp';
 
-const { readDirR, removeDir, makeDir } = require('./utils');
+import { readDirR, removeDir, makeDir } from './utils';
 
 const imagesSourcesPath = 'C:\\Users\\K\\Downloads\\pics-test\\dynamic';
 const imagesTargetPath = path.join(imagesSourcesPath, './_ready_cut');
@@ -10,7 +9,7 @@ const imagesTargetPath = path.join(imagesSourcesPath, './_ready_cut');
 const requiredWidth = 128;
 const requiredHeight = 128;
 
-async function cutImages() {
+export async function cutImages() {
   removeDir(imagesTargetPath);
   makeDir(imagesTargetPath);
 
@@ -50,5 +49,3 @@ async function cutImages() {
 }
 
 cutImages();
-
-module.exports = { cutImages };

@@ -3,7 +3,7 @@
  * @param width {number}
  * @param height {number}
  */
-function getImageVariant({ width, height } = {}) {
+export function getImageVariant({ width, height } = {}) {
   if (width > height) {
     if (width / height > 1 && width / height < 1.3333) {
       return 's';
@@ -22,5 +22,3 @@ function getImageVariant({ width, height } = {}) {
 
   return 's';
 }
-
-module.exports = { getImageVariant };

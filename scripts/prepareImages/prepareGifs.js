@@ -1,14 +1,14 @@
-const sharp = require('sharp');
-const fs = require('fs').promises;
+import sharp from 'sharp';
+import fs from 'fs/promises';
 
-const { getPaths } = require('./utils');
-const { getRandomString } = require('./utils');
+import { getPaths } from './utils';
+import { getRandomString } from './utils';
 
-const { readDirR } = require('./utils');
-const { makeDir } = require('./utils');
-const { removeDir } = require('./utils');
-const { getImageVariant } = require('./utils');
-const { getMaxWidth } = require('./utils');
+import { readDirR } from './utils';
+import { makeDir } from './utils';
+import { removeDir } from './utils';
+import { getImageVariant } from './utils';
+import { getMaxWidth } from './utils';
 
 const paths = getPaths();
 

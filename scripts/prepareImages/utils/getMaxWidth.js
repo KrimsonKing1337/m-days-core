@@ -1,7 +1,7 @@
 /**
  * @param width {number || string}
  */
-function getMaxWidth(width) {
+export function getMaxWidth(width) {
     if (typeof width === 'string') width = Number(width);
 
     if (width >= 128 && width < 240) return 128;
@@ -17,5 +17,3 @@ function getMaxWidth(width) {
     if (width >= 5210 && width < 7680) return 5210;
     if (width >= 7680) return 7680;
 }
-
-module.exports = { getMaxWidth };

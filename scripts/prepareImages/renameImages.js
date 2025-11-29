@@ -1,9 +1,8 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import { rename } from 'fs/promises';
+import path from 'path';
 
-const { rename } = require('fs/promises');
-
-const { getRandomString } = require('./utils/getRandomString.js');
+import { getRandomString } from './utils/getRandomString.js';
 
 function* readAllFiles(dir) {
   const files = fs.readdirSync(dir, { withFileTypes: true });

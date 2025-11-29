@@ -1,5 +1,5 @@
-const fs = require('fs').promises;
-const path = require('path');
+import fs from 'fs/promises';
+import path from 'path';
 
 const dir = 'C:\\Users\\K\\Downloads\\0';
 const mask = 'mp4_thumb';

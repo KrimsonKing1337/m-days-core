@@ -1,5 +1,5 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
 const _get = require('lodash/get.js');
 const _set = require('lodash/set.js');

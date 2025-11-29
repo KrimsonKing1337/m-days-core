@@ -1,8 +1,10 @@
-const sharp = require('sharp');
+import path from 'path';
 
-const { getRandomImgPath } = require('./getRandomImgPath.js');
-const imgs = require('./img_bg.json');
-const path = require('path');
+import sharp from 'sharp';
+
+import { getRandomImgPath } from './getRandomImgPath.js';
+
+import imgs from './img_bg.json';
 
 const publicImagesPath = path.resolve(__dirname, '../../../m-days-public/');
 

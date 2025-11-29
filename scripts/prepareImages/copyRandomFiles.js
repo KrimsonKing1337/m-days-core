@@ -1,8 +1,8 @@
-const fs = require('fs').promises;
+import fs from 'fs/promises';
 
-const { readDirR } = require('./utils');
-const { getPaths } = require('./utils');
-const { makeDir, removeDir } = require('./utils');
+import { readDirR } from './utils';
+import { getPaths } from './utils';
+import { makeDir, removeDir } from './utils';
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {

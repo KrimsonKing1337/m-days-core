@@ -1,17 +1,17 @@
-const { getPaths } = require('./getPaths.js');
+import { getPaths } from './getPaths.js';
 
-const { readDirR } = require('./readDirR.js');
-const { makeDir } = require('./makeDir.js');
-const { removeDir } = require('./removeDir.js');
+import { readDirR } from './readDirR.js';
+import { makeDir } from './makeDir.js';
+import { removeDir } from './removeDir.js';
 
-const { getRandomString } = require('./getRandomString.js');
-const { getRandomInteger } = require('./getRandomInteger.js');
-const { getRandomImage } = require('./getRandomImage.js');
+import { getRandomString } from './getRandomString.js';
+import { getRandomInteger } from './getRandomInteger.js';
+import { getRandomImage } from './getRandomImage.js';
 
-const { getFileInfo } = require('./getFileInfo.js');
-const { getMaxWidth } = require('./getMaxWidth.js');
+import { getFileInfo } from './getFileInfo.js';
+import { getMaxWidth } from './getMaxWidth.js';
 
-const { getImageVariant } = require('./getImageVariant.js');
+import { getImageVariant } from './getImageVariant.js';
 
 module.exports = {
   getPaths,

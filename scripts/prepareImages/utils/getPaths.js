@@ -1,4 +1,4 @@
-const path = require('path');
+import path from 'path';
 
 const sourceImagesPath = 'D:\\Projects\\m-days\\01. digital\\m-days-public-images_originals\\test';
 const destinationImagesPath = 'D:\\Projects\\m-days\\01. digital\\m-days-public-images\\test';
@@ -33,7 +33,7 @@ const randomImagesTempPath = path.join(randomImagesSourcesPath, './_temp');
  *  }
  * }
  */
-function getPaths() {
+export function getPaths() {
   return {
     imagesSourcesPath,
     imagesTargetPath,
@@ -48,5 +48,3 @@ function getPaths() {
     randomImagesTempPath,
   };
 }
-
-module.exports = { getPaths };

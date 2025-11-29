@@ -3,6 +3,7 @@
   "version": "0.0.80",
   "description": "",
   "main": "./",
+  "type": "module",
   "scripts": {
     "make": "node ./scripts/make.js",
     "clean": "rimraf dist tgz lib lib-esm",

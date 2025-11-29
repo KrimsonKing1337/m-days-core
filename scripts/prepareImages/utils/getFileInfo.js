@@ -1,10 +1,10 @@
-const path = require('path');
+import path from 'path';
 
 /**
  *
  * @param pathFile {string}
  */
-function getFileInfo(pathFile) {
+export function getFileInfo(pathFile) {
   const name = path.basename(pathFile);
   const ext = path.extname(pathFile).toLowerCase();
   const dir = path.dirname(pathFile);
@@ -19,5 +19,3 @@ function getFileInfo(pathFile) {
     subFolder: subFolder,
   };
 }
-
-module.exports = { getFileInfo };

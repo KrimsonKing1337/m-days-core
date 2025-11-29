@@ -1,6 +1,6 @@
-const fs = require('fs');
+import fs from 'fs';
 
-const { getFileInfo } = require('./getFileInfo.js');
+import { getFileInfo } from './getFileInfo.js';
 
 // R = Recursively
 

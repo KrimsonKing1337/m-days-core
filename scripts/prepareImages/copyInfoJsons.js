@@ -1,8 +1,8 @@
-const fs = require('fs/promises');
-const path = require('path');
+import fs from 'fs/promises';
+import path from 'path';
 
-const { readDirR } = require('./utils');
-const { getPaths } = require('./utils');
+import { readDirR } from './utils';
+import { getPaths } from './utils';
 
 const paths = getPaths();
 

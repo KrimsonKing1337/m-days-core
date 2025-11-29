@@ -1,11 +1,9 @@
-const fs = require('fs');
+import fs from 'fs';
 
 /**
  *
  * @param dirPath {string}
  */
-function removeDir(dirPath) {
+export function removeDir(dirPath) {
   fs.rmSync(dirPath, { recursive: true, force: true });
 }
-
-module.exports = { removeDir };

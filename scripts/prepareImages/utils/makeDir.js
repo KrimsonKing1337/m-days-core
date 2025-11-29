@@ -1,13 +1,11 @@
-const fs = require('fs');
+import fs from 'fs';
 
 /**
  *
  * @param path {string}
  */
-function makeDir(path) {
+export function makeDir(path) {
   if (!fs.existsSync(path)) {
     fs.mkdirSync(path, { recursive: true });
   }
 }
-
-module.exports =  { makeDir };
