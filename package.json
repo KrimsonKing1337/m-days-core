@@ -18,6 +18,7 @@
     "generate-json": "tsx ./scripts/prepareImages/generateJsonForImages.ts",
     "update-db": "tsx ./scripts/database/updateRecords.ts && tsx ./scripts/database/updatePresets.ts",
     "prepare-all": "node ./scripts/prepareAll.js",
+    "clean-before": "tsx ./scripts/prepareImages/cleanBefore.ts",
     "clean": "tsx ./scripts/prepareImages/clean.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "node ./scripts/postinstall.js",

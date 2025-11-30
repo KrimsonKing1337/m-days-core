@@ -11,7 +11,7 @@ export async function clean() {
   await fs.rm(randomImagesTempPath, { recursive: true, force: true });
   await fs.rm(jsonChunksPath, { recursive: true, force: true });
 
-  console.log('cleaned');
+  console.log('clean is done');
 }
 
 clean();
