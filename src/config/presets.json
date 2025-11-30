@@ -1,5 +1,16 @@
 [
   {
+    "id": "default",
+    "values": {
+      "static": [
+        {
+          "collection": "default",
+          "topic": "common"
+        }
+      ]
+    }
+  },
+  {
     "id": "gordey",
     "values": {
       "dynamic": [
