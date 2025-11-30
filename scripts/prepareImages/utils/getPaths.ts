@@ -4,12 +4,12 @@ const mediaSourcesPath = 'D:\\Projects\\m-days\\01. digital\\m-days-public-image
 const mediaTargetPath = 'D:\\Projects\\m-days\\01. digital\\m-days-public-images_test';
 
 const imagesSourcesPath = path.join(mediaSourcesPath, './_ready_random/static');
-const imagesTargetPath = path.join(mediaTargetPath, './_ready/static');
-const imagesTempPath =  path.join(mediaTargetPath, './_ready/static/_temp');
+const imagesTargetPath = path.join(mediaTargetPath, './static');
+const imagesTempPath =  path.join(mediaTargetPath, './static/_temp');
 
 const gifsSourcesPath = path.join(mediaSourcesPath, './_ready_random/dynamic');
-const gifsTargetPath = path.join(mediaTargetPath, './_ready/dynamic');
-const gifsTempPath = path.join(mediaTargetPath, './_ready/dynamic/_temp');
+const gifsTargetPath = path.join(mediaTargetPath, './dynamic');
+const gifsTempPath = path.join(mediaTargetPath, './dynamic/_temp');
 
 const randomImagesSourcesPath = mediaSourcesPath;
 const randomImagesTargetPath = path.join(randomImagesSourcesPath, './_ready_random');
