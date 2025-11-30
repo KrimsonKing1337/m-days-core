@@ -2,6 +2,7 @@
   {
     "id": "default",
     "values": {
+      "dynamic": [],
       "static": [
         {
           "collection": "default",
