@@ -1,10 +1,11 @@
 import fs from 'fs/promises';
 import path from 'path';
 
+import { getPaths } from './utils';
+
 const { sep } = path;
 
-const targetPath = 'D:/Projects/m-days/01. digital/m-days-public-images_test/_chunks';
-const sourcePath = 'D:/Projects/m-days/01. digital/m-days-public-images_test/_ready';
+const { jsonChunksPath, mediaTargetPath } = getPaths();
 
 async function findFileUpward(startPath: string, targetFileName: string) {
   let currentDir = path.resolve(startPath);
@@ -140,7 +141,7 @@ async function getItems(dirPath: string) {
         const id = `${item}___${timestamp}`;
 
         // возвращаем относительный путь от последней папки в sourcePath
-        const basepath = path.basename(sourcePath);
+        const basepath = path.basename(mediaTargetPath);
         const index = safetyFullPath.indexOf(basepath);
         const substr = safetyFullPath.slice(index);
 
@@ -168,7 +169,7 @@ async function getItems(dirPath: string) {
 }
 
 async function generateJsonForImages() {
-  const items = await getItems(sourcePath);
+  const items = await getItems(mediaTargetPath);
 
   const chunks: Item[][] = [];
   let chunk: Item[] = [];
@@ -185,14 +186,14 @@ async function generateJsonForImages() {
 
   chunks.push(chunk);
 
-  await fs.rm(targetPath, { recursive: true, force: true });
-  await fs.mkdir(targetPath, { recursive: true });
+  await fs.rm(jsonChunksPath, { recursive: true, force: true });
+  await fs.mkdir(jsonChunksPath, { recursive: true });
 
   for (const chunkCur of chunks) {
     const index = chunks.indexOf(chunkCur);
     const resultJson = JSON.stringify(chunkCur, null, 2);
 
-    const jsonPath = path.join(targetPath, `./chunk-${index}.json`);
+    const jsonPath = path.join(jsonChunksPath, `./chunk-${index}.json`);
 
     await fs.writeFile(jsonPath, resultJson);
   }

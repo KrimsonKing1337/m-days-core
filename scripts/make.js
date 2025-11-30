@@ -1,6 +1,6 @@
 import { execSync } from 'child_process';
 
-execSync('npm run clean');
+execSync('npm run make-clean');
 // execSync('npm run scss');
 execSync('npm run copy-files');
 execSync('npm run ts');
