@@ -25,4 +25,5 @@ const PresetValuesSchema = z.object({
 export const PresetSchema = z.object({
   id: z.string().nonempty(),
   values: PresetValuesSchema,
+  skin: z.string().nonempty().optional(),
 });
