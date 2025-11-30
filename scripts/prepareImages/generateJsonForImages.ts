@@ -146,6 +146,7 @@ async function getItems(dirPath: string) {
         const basepath = path.basename(mediaTargetPath);
         const index = safetyFullPath.indexOf(basepath);
         const substr = safetyFullPath.slice(index);
+        const readyStr = substr.slice(basepath.length + 1);
 
         const newItem = {
           id,
@@ -156,7 +157,7 @@ async function getItems(dirPath: string) {
           orientation,
           width: Number(width),
           filename: item,
-          path: substr,
+          path: readyStr,
           size,
         };
 
