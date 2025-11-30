@@ -86,6 +86,8 @@ async function getItems(dirPath: string) {
 
         const { size } = stats;
 
+        console.log(`Processing file ${safetyFullPath}`);
+
         const rootPath = await findFileUpward(safetyFullPath, 'info.json') as string;
         const pathToMedia = path.posix.join(rootPath, 'media');
 

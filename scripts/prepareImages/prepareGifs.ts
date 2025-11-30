@@ -220,13 +220,15 @@ class PrepareImages {
     const jsons = this.getJsons();
 
     for (const jsonCur of jsons) {
-      const indexStart = paths.imagesSourcesPath.length;
+      const indexStart = this.imagesSourcesPath.length;
       const newSubFolder = jsonCur.fullPathWithoutName.substring(indexStart);
 
       const jsonCurTargetDir = `${this.imagesTargetPath}/${newSubFolder}`;
       const jsonCurTarget = `${jsonCurTargetDir}/${jsonCur.name}`;
 
       await fs.cp(jsonCur.fullPath, jsonCurTarget);
+
+      console.log(jsonCur);
 
       console.log(`${jsonCur.name} copied to ${jsonCurTargetDir}`);
     }

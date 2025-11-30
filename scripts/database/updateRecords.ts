@@ -2,7 +2,8 @@ import fs from 'fs/promises';
 import path from 'path';
 import { MongoClient } from 'mongodb';
 
-import { Image } from './@types';
+import type { Image } from './@types';
+import { getPaths } from '../prepareImages/utils';
 
 import { zodValidate } from './zodValidate';
 import { ImageSchema } from './@schemas';
@@ -15,9 +16,9 @@ const collectionName = 'images';
 const tempCollectionName = 'images_temp';
 const oldCollectionName = 'images_old';
 
-const chunksDir = 'D:/Projects/m-days/01. digital/m-days-core/test';
-
 const client = new MongoClient(uri);
+
+const { jsonChunksPath } = getPaths();
 
 async function updateRecords() {
   try {
@@ -26,14 +27,14 @@ async function updateRecords() {
     const db = client.db(dbName);
     const collection = db.collection(tempCollectionName);
 
-    const filesAsync = await fs.readdir(chunksDir);
+    const filesAsync = await fs.readdir(jsonChunksPath);
 
     const files = filesAsync
       .filter(file => file.endsWith('.json'))
       .sort(); // по алфавиту - чтобы загружались по порядку
 
     for (const file of files) {
-      const fullPath = path.join(chunksDir, file);
+      const fullPath = path.join(jsonChunksPath, file);
 
       const content = await fs.readFile(fullPath, 'utf8');
 
@@ -60,15 +61,16 @@ async function updateRecords() {
     await db.collection(collectionName).rename(oldCollectionName, { dropTarget: true }); // удалить, если уже есть
     await db.collection(tempCollectionName).rename(collectionName);
     await db.collection(oldCollectionName).drop();
+    await client.close();
 
     console.log('Done!');
   } catch (err) {
     console.error('There is an error while importing:', err);
 
+    await client.close();
+
     process.exit(1);
   }
-
-  await client.close();
 }
 
 updateRecords();

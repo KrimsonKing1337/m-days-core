@@ -12,16 +12,20 @@ function shuffleArray(array: unknown[]) {
   }
 }
 
-async function randomFiles(amount = 100) {
-  const { randomImagesSourcesPath, randomImagesTargetPath } = getPaths();
+type CopyRandomFilesArgs = {
+  amount?: number;
+  sourcesPath: string;
+  targetPath: string;
+};
 
-  removeDir(randomImagesTargetPath);
-  makeDir(randomImagesTargetPath);
+async function copyRandomFiles({ amount = 100, sourcesPath, targetPath }: CopyRandomFilesArgs) {
+  removeDir(targetPath);
+  makeDir(targetPath);
 
   const counter: Record<string, number> = {};
 
   const readDirResult = readDirR({
-    path: randomImagesSourcesPath, // media files and info.jsons as well
+    path: sourcesPath, // media files and info.jsons as well
   });
 
   shuffleArray(readDirResult);
@@ -29,10 +33,10 @@ async function randomFiles(amount = 100) {
   for (let i = 0; i < readDirResult.length; i++) {
     const fileCur = readDirResult[i];
 
-    const indexStart = randomImagesSourcesPath.length;
+    const indexStart = sourcesPath.length;
     const targetSubFolder = fileCur.fullPathWithoutName.substring(indexStart);
 
-    const imgCurTargetDir = `${randomImagesTargetPath}/${targetSubFolder}`;
+    const imgCurTargetDir = `${targetPath}/${targetSubFolder}`;
 
     if (!counter[targetSubFolder]) {
       counter[targetSubFolder] = 0;
@@ -62,4 +66,25 @@ async function randomFiles(amount = 100) {
   console.log('done');
 }
 
-randomFiles(100);
+async function doCopyRandomFiles() {
+  const {
+    randomImagesSourcesPath,
+    randomImagesTargetPath,
+    randomGifsSourcesPath,
+    randomGifTargetPath,
+  } = getPaths();
+
+  await copyRandomFiles({
+    amount: 100,
+    sourcesPath: randomImagesSourcesPath,
+    targetPath: randomImagesTargetPath,
+  });
+
+  await copyRandomFiles({
+    amount: 100,
+    sourcesPath: randomGifsSourcesPath,
+    targetPath: randomGifTargetPath,
+  });
+}
+
+doCopyRandomFiles();

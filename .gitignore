@@ -2,6 +2,7 @@
 node_modules
 dist
 img_bg
+logs
 
 *.bak
 *.tgz

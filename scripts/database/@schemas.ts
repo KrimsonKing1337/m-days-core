@@ -12,9 +12,14 @@ export const ImageSchema = z.object({
   size: z.number().positive(),
 });
 
+const PresetValuesTypeSchema = z.object({
+  collection: z.string().nonempty(),
+  topic: z.string().nonempty(),
+});
+
 const PresetValuesSchema = z.object({
-  dynamic: z.array(z.string()),
-  static: z.array(z.string()),
+  dynamic: z.array(PresetValuesTypeSchema),
+  static: z.array(PresetValuesTypeSchema),
 });
 
 export const PresetSchema = z.object({

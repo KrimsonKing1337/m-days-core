@@ -205,7 +205,7 @@ class PrepareImages {
     for (const sizeCur of sizes) {
       const newName = getRandomString();
 
-      const indexStart = paths.imagesSourcesPath.length;
+      const indexStart = this.imagesSourcesPath.length;
       const newSubFolder = img.fullPathWithoutName.substring(indexStart);
 
       let imgCurTargetDir = `${this.imagesTargetPath}/${newSubFolder}/${variant}/${sizeCur}`;
