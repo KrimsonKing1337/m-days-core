@@ -22,7 +22,7 @@ async function scanDir(baseDir: string, currentDir = '', result: string[] = []) 
   return result;
 }
 
-export async function generateJsonForImagesStandalone() {
+export async function generateJsonForMediaStandalone() {
   const { mediaStandalonePath, mediaStandaloneJsonPath } = getPaths();
 
   const files = await scanDir(mediaStandalonePath);
@@ -32,4 +32,4 @@ export async function generateJsonForImagesStandalone() {
   await fs.writeFile(mediaStandaloneJsonPath, resultJson);
 }
 
-generateJsonForImagesStandalone();
+generateJsonForMediaStandalone();

@@ -171,7 +171,7 @@ async function getItems(dirPath: string) {
   return result;
 }
 
-async function generateJsonForImages() {
+async function generateJsonForMedia() {
   const items = await getItems(mediaTargetPath);
 
   const chunks: Item[][] = [];
@@ -204,4 +204,4 @@ async function generateJsonForImages() {
   console.log('done');
 }
 
-generateJsonForImages();
+generateJsonForMedia();
