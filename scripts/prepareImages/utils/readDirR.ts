@@ -35,7 +35,7 @@ export function readDirR({ path, formats = [] }: ReadDirR) {
         if (formatIsOk === true) {
           result.push(fileInfo);
         } else {
-          console.log(`${fileCurFullPath} has wrong format, skip;`);
+          // console.log(`${fileCurFullPath} has wrong format, skip;`);
         }
       } else if (stats.isDirectory()) {
         recursive(fileCurFullPath);

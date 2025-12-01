@@ -153,7 +153,7 @@ class PrepareImages {
       targets.push(formattedTarget);
     }
 
-    return targets.filter((targetCur) => targetCur !== null);
+    return targets.filter((targetCur) => !!targetCur);
   }
 
   async convertEachTarget(targets: Target[]) {

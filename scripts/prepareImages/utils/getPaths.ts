@@ -1,7 +1,7 @@
 import path from 'path';
 
-const mediaSourcesPath = 'D:\\Projects\\m-days\\01. digital\\m-days-public-images_originals_test';
-const mediaTargetPath = 'D:\\Projects\\m-days\\01. digital\\m-days-public-images_test';
+const mediaSourcesPath = 'G:\\m-days\\01. digital\\m-days-public-images_originals';
+const mediaTargetPath = 'D:\\Projects\\m-days\\01. digital\\m-days-public-images';
 
 const imagesSourcesPath = path.join(mediaSourcesPath, './_ready_random/static');
 const imagesTargetPath = path.join(mediaTargetPath, './static');
