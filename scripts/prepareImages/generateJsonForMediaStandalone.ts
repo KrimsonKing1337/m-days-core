@@ -8,7 +8,7 @@ async function scanDir(baseDir: string, currentDir = '', result: string[] = []) 
   const entries = await fs.readdir(fullPath, { withFileTypes: true });
 
   for (const entry of entries) {
-    const entryPath = path.join(currentDir, entry.name);
+    const entryPath = path.posix.join(currentDir, entry.name);
 
     if (entry.isDirectory()) {
       await scanDir(baseDir, entryPath, result);

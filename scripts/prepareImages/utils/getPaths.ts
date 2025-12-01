@@ -22,8 +22,8 @@ const randomGifTempPath = path.join(randomGifsSourcesPath, './_temp');
 const jsonChunksPath = path.join(mediaTargetPath, './_chunks');
 const jsonPresetsPath = 'D:\\Projects\\m-days\\01. digital\\m-days-core\\src\\config\\presets.json';
 
-const mediaStandalonePath = 'D:\\Projects\\m-days\\01. digital\\m-days-fe-widget\\dist\\standalone\\media';
-const mediaStandaloneJsonPath = 'D:\\Projects\\m-days\\01. digital\\m-days-fe-widget\\dist\\standalone\\info.json';
+const mediaStandalonePath = 'D:\\Projects\\m-days\\01. digital\\m-days-fe-widget\\public\\standalone\\media';
+const mediaStandaloneJsonPath = 'D:\\Projects\\m-days\\01. digital\\m-days-fe-widget\\public\\standalone\\info.json';
 
 export function getPaths() {
   return {
