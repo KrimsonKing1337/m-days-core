@@ -14,7 +14,6 @@ const dbName = 'cache';
 
 const collectionName = 'images';
 const tempCollectionName = 'images_temp';
-const oldCollectionName = 'images_old';
 
 const client = new MongoClient(uri);
 
@@ -58,9 +57,7 @@ async function updateRecords() {
       }
     }
 
-    await db.collection(collectionName).rename(oldCollectionName, { dropTarget: true }); // удалить, если уже есть
-    await db.collection(tempCollectionName).rename(collectionName);
-    await db.collection(oldCollectionName).drop();
+    await db.collection(tempCollectionName).rename(collectionName, { dropTarget: true });
     await client.close();
 
     console.log('Done!');
