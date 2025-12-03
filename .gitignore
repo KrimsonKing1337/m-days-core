@@ -6,3 +6,5 @@ logs
 
 *.bak
 *.tgz
+
+paths.*.ts

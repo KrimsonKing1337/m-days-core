@@ -1,7 +1,13 @@
 import path from 'path';
+import { paths } from 'config/paths.local';
 
-const mediaSourcesPath = 'G:\\m-days\\01. digital\\m-days-public-images_originals';
-const mediaTargetPath = 'D:\\Projects\\m-days\\01. digital\\m-days-public-images';
+const {
+  mediaSourcesPath,
+  mediaTargetPath,
+  jsonPresetsPath,
+  mediaStandalonePath,
+  mediaStandaloneJsonPath,
+} = paths;
 
 const imagesSourcesPath = path.join(mediaSourcesPath, './_ready_random/static');
 const imagesTargetPath = path.join(mediaTargetPath, './static');
@@ -20,10 +26,6 @@ const randomGifTargetPath = path.join(randomGifsSourcesPath, './_ready_random');
 const randomGifTempPath = path.join(randomGifsSourcesPath, './_temp');
 
 const jsonChunksPath = path.join(mediaTargetPath, './_chunks');
-const jsonPresetsPath = 'D:\\Projects\\m-days\\01. digital\\m-days-core\\src\\config\\presets.json';
-
-const mediaStandalonePath = 'D:\\Projects\\m-days\\01. digital\\m-days-fe-widget\\public\\standalone\\media';
-const mediaStandaloneJsonPath = 'D:\\Projects\\m-days\\01. digital\\m-days-fe-widget\\public\\standalone\\info.json';
 
 export function getPaths() {
   return {
