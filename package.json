@@ -17,6 +17,8 @@
     "prepare-gifs": "tsx ./scripts/prepareImages/prepareGifs.ts",
     "generate-json": "tsx scripts/prepareImages/generateJsonForMedia.ts",
     "generate-json-standalone": "tsx scripts/prepareImages/generateJsonForMediaStandalone.ts",
+    "update-db-records": "tsx ./scripts/database/updateRecords.ts",
+    "update-db-presets": "tsx ./scripts/database/updatePresets.ts",
     "update-db": "tsx ./scripts/database/updateRecords.ts && tsx ./scripts/database/updatePresets.ts",
     "prepare-all": "node ./scripts/prepareAll.js",
     "clean-before": "tsx ./scripts/prepareImages/cleanBefore.ts",

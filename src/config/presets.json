@@ -12,8 +12,25 @@
     }
   },
   {
+    "id": "classical_art",
+    "values": {
+      "dynamic": [],
+      "static": [
+        {
+          "collection": "classical_art",
+          "topic": "common"
+        }
+      ]
+    }
+  },
+  {
     "id": "gordey",
-    "skin": "cyberpunk",
+    "options": {
+      "skin": "cyberpunk",
+      "dynamic": {
+        "width": [360, "windowWidth"]
+      }
+    },
     "values": {
       "dynamic": [
         {
@@ -131,6 +148,11 @@
   },
   {
     "id": "timka_valya",
+    "options": {
+      "dynamic": {
+        "width": [360, "windowWidth"]
+      }
+    },
     "values": {
       "dynamic": [
         {

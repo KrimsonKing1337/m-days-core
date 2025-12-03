@@ -172,6 +172,9 @@ async function getItems(dirPath: string) {
 }
 
 async function generateJsonForMedia() {
+  await fs.rm(jsonChunksPath, { recursive: true, force: true });
+  await fs.mkdir(jsonChunksPath, { recursive: true });
+
   const items = await getItems(mediaTargetPath);
 
   const chunks: Item[][] = [];
@@ -188,9 +191,6 @@ async function generateJsonForMedia() {
   });
 
   chunks.push(chunk);
-
-  await fs.rm(jsonChunksPath, { recursive: true, force: true });
-  await fs.mkdir(jsonChunksPath, { recursive: true });
 
   for (const chunkCur of chunks) {
     const index = chunks.indexOf(chunkCur);
