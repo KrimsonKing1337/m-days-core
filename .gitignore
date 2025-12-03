@@ -8,3 +8,4 @@ logs
 *.tgz
 
 paths.*.ts
+.env

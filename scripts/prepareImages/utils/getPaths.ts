@@ -1,5 +1,13 @@
 import path from 'path';
-import { paths } from 'config/paths.local';
+import dotenv from 'dotenv';
+import { paths as localPaths } from 'config/paths.local';
+import { paths as serverPaths } from 'config/paths.server';
+
+dotenv.config();
+
+const isServer = process.env.M_DAYS_ENV === 'server';
+
+export const paths = isServer ? serverPaths : localPaths;
 
 const {
   mediaSourcesPath,
