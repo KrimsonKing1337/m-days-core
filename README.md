@@ -8,6 +8,7 @@ npm => 6.5.0
 
 ## Install
 ```npm i```
+```npm husky init```
 
 ## Before start
 The are files need to be created.

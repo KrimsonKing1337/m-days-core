@@ -24,10 +24,26 @@ const PresetOptionsTypeSchema = z.object({
   height: PresetOptionsTypeSizeSchema,
 });
 
+const PresetOptionsGuiSchema = z.object({
+  noGui: z.boolean().optional(),
+  noMDays: z.boolean().optional(),
+  weather: z.boolean().optional(),
+  year: z.boolean().optional(),
+  date: z.boolean().optional(),
+  progressBar: z.boolean().optional(),
+  days: z.boolean().optional(),
+  percent: z.boolean().optional(),
+  percentFull: z.boolean().optional(),
+  watermark: z.boolean().optional(),
+});
+
 const PresetOptionsSchema = z.object({
   dynamic: PresetOptionsTypeSchema.optional(),
   static: PresetOptionsTypeSchema.optional(),
   skin: z.string().nonempty().optional(),
+  gui: PresetOptionsGuiSchema.optional(),
+  percentUpdateSpeed: z.number().positive().optional(),
+  metaRefresh: z.number().positive().optional(),
 });
 
 const PresetValuesTypeSchema = z.object({
