@@ -25,13 +25,20 @@ const PresetOptionsTypeSchema = z.object({
 });
 
 const PresetOptionsGuiSchema = z.object({
+  mode: z.enum(['allVisible', 'allInvisible', 'single']),
   noGui: z.boolean().optional(),
   noMDays: z.boolean().optional(),
   weather: z.boolean().optional(),
   year: z.boolean().optional(),
   date: z.boolean().optional(),
+  time: z.boolean().optional(),
+  hours: z.boolean().optional(),
+  minutes: z.boolean().optional(),
+  seconds: z.boolean().optional(),
+  timeDots: z.boolean().optional(),
   progressBar: z.boolean().optional(),
   days: z.boolean().optional(),
+  daysLabel: z.boolean().optional(),
   percent: z.boolean().optional(),
   percentFull: z.boolean().optional(),
   watermark: z.boolean().optional(),
